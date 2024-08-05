@@ -1,6 +1,7 @@
 "use strict";
 
 const db = require("../../config/db");
+const Movie = require("../../models/Movie");
 
 const process = {
   //데이터 베이스 연결 확인용 테스트 코드입니다.
@@ -14,7 +15,7 @@ const process = {
     });
   },
   getMovies: (req, res) => {
-    const movie = new Movie(req.body);
+    const movie = new Movie();
     const response = movie.getLists();
     return res.json(response);
   },
