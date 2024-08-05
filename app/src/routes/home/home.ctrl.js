@@ -13,6 +13,11 @@ const process = {
       return res.json(data);
     });
   },
+  getMovies: (req, res) => {
+    const movie = new Movie(req.body);
+    const response = movie.getLists();
+    return res.json(response);
+  },
 };
 
 module.exports = {
