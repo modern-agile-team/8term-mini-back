@@ -5,13 +5,12 @@ class Movie {
     this.body = body;
   }
   getLists() {
-    const query = "select * from movie";
-    db.query(query, (err, data) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      return res.json(data);
+    return new Promise((resolve, reject) => {
+      const query = "select * from movie";
+      db.query(query, async (err, data) => {
+        if (err) reject(`${err}`);
+        resolve(data);
+      });
     });
   }
 }
