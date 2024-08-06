@@ -3,10 +3,19 @@
 const db = require("../config/db");
 
 class MovieStorage {
-  getMovieInfo() {
+  static getMovieInfo(id) {
     return new Promise((resolve, reject) => {
-      const query = " SELECT * FROM movie";
-      db.query(query, (err, data) => {
+      let query;
+      let params = [];
+
+      if (id) {
+        query = "SELECT * FROM movie WHERE id = ?";
+        params = [id];
+      } else {
+        query = "SELECT * FROM movie";
+      }
+
+      db.query(query, params, (err, data) => {
         if (err) reject(err);
         resolve(data);
       });
