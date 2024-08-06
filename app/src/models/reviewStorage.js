@@ -4,15 +4,16 @@ const db = require("../config/db");
 
 class ReviewStorage {
   static getReviewInfo(movie_id) {
+    console.log(typeof movie_id);
     return new Promise((resolve, reject) => {
       let query;
       let params = [];
 
-      if (id) {
+      if (movie_id) {
         query = "SELECT * FROM review WHERE movie_id = ?";
         params = [movie_id];
       } else {
-        console("리뷰 조회에 movie_id가 필요합니다.");
+        console.log("리뷰 조회에 movie_id가 필요합니다.");
       }
 
       db.query(query, params, (err, data) => {
