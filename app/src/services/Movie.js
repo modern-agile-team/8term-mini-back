@@ -1,18 +1,9 @@
-"use strict";
-
-const MovieStorage = require("../models/movieStorage");
-// const db = require("../config/db");
+const db = require("../config/db");
 
 class Movie {
   constructor(body) {
     this.body = body;
   }
-
-  check() {
-    const response = MovieStorage.getMovieInfo();
-    return response;
-  }
-
   getLists() {
     return new Promise((resolve, reject) => {
       const query = "select * from movie";

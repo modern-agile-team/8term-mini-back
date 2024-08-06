@@ -3,11 +3,9 @@
 const Movie = require("../../services/Movie");
 
 const process = {
-  check: async (req, res) => {
-    //조회
+  getMovies: async (req, res) => {
     const movie = new Movie();
-    const response = await movie.check();
-
+    const response = await movie.getLists();
     return res.json(response);
   },
 };
