@@ -5,6 +5,6 @@ const router = express.Router();
 
 const newctrl = require("../movieInfo/movieInfo.ctrl");
 
-router.get("/", newctrl.process.check);
+router.get("/movies/:id", newctrl.process.check);
 
 module.exports = router;
