@@ -1,8 +1,9 @@
 # 8term-mini-back
+
 모던애자일 8기 미니프로젝트 모던무비 백 레포지토리입니다
 
-
 # Commit Convention
+
 ### Commit Example
 
 **{type}/작업내용/#{issue-number}**
