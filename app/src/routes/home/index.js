@@ -8,10 +8,6 @@ const userCtrl = require("../user/user.ctrl");
 
 router.get("/", newctrl.process.check);
 
-router.get("/login", userCtrl.output.login);
-router.get("/register", userCtrl.output.register);
-
-router.post("/login", userCtrl.process.login);
-router.post("/register", userCtrl.process.register);
+router.post("/users", userCtrl.process.signUp);
 
 module.exports = router;
