@@ -9,22 +9,20 @@ class ReviewStorage {
     return db.query(query, [movieId]);
   }
 
-  static addReview(review_data) {
-    return new Promise((resolve, reject) => {
-      const query =
-        "INSERT INTO review ( user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
-      const user_id = review_data.user_id;
-      const movie_id = review_data.movie_id;
-      const comment = review_data.comment;
-      const field = review_data.field;
-      db.query(query, [user_id, movie_id, comment, field], (err, data) => {
-        if (err) reject(err);
-        resolve(data);
-      });
-    });
+  static reviewAdd(reviewData) {
+    // 추가
+    const query =
+      "INSERT INTO list (user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
+    const user_id = reviewData.user_id;
+    const movie_id = reviewData.movie_id;
+    const comment = reviewData.comment;
+    const field = reviewData.field;
+
+    return db.query(query, [user_id, movie_id, comment, field]);
   }
 
   static deleteReview(review_id) {
+    // 삭제
     return new Promise((resolve, reject) => {
       const query = "DELETE FROM review WHERE review_id = ?";
       db.query(query, [review_id], (err, data) => {
