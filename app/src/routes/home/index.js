@@ -3,8 +3,9 @@
 const express = require("express");
 const router = express.Router();
 
-const newctrl = require("../movieInfo/movieInfo.ctrl");
+const movieInfoCtrl = require("../movieInfo/movieInfo.ctrl");
 
-router.get("/movies/:id", newctrl.process.check);
+router.get("/movies", movieInfoCtrl.process.getMovie);
+router.get("/movies/:id", movieInfoCtrl.process.getMovie);
 
 module.exports = router;

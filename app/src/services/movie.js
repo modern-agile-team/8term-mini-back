@@ -1,26 +1,39 @@
 "use strict";
 
 const MovieStorage = require("../models/movieStorage");
-// const db = require("../config/db");
 
 class Movie {
-  constructor(body) {
-    this.body = body;
+  constructor(req) {
+    this.body = req.body;
+    this.params = req.params;
   }
 
-  check() {
-    const response = MovieStorage.getMovieInfo();
-    return response;
-  }
+  async getMovie() {
+    const movieId = Number(this.params.id);
+    let response;
+    try {
+      if (movieId) {
+        //단일조회
+        response = await MovieStorage.getMovieInfo(movieId);
+      } else {
+        //전체조회
+        response = await MovieStorage.getMovieInfos();
+      }
+      return { status: 200, data: response[0] };
+    } catch (error) {
+      console.error("오류 메시지:", error.message);
+      console.error("오류 코드:", error.code);
 
-  getLists() {
-    return new Promise((resolve, reject) => {
-      const query = "select * from movie";
-      db.query(query, async (err, data) => {
-        if (err) reject(`${err}`);
-        resolve(data);
-      });
-    });
+      if (error.code === "ECONNREFUSED") {
+        return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+      } else if (error.code === "ER_PARSE_ERROR") {
+        return { status: 500, data: { error: "SQL 구문 오류" } };
+      } else if (error.code === "ETIMEOUT") {
+        return { status: 504, data: { error: "데이터베이스 연결 시간 초과" } };
+      } else {
+        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      }
+    }
   }
 }
 

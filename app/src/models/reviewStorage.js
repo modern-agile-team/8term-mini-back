@@ -5,17 +5,9 @@ const db = require("../config/db");
 class ReviewStorage {
   static getReviewInfo(movie_id) {
     return new Promise((resolve, reject) => {
-      let query;
-      let params = [];
+      const query = "SELECT * FROM review WHERE movie_id = ?";
 
-      if (id) {
-        query = "SELECT * FROM review WHERE movie_id = ?";
-        params = [movie_id];
-      } else {
-        console("리뷰 조회에 movie_id가 필요합니다.");
-      }
-
-      db.query(query, params, (err, data) => {
+      db.query(query, [movie_id], (err, data) => {
         if (err) reject(err);
         resolve(data);
       });
@@ -30,6 +22,7 @@ class ReviewStorage {
       const movie_id = review_data.movie_id;
       const comment = review_data.comment;
       const field = review_data.field;
+
       db.query(query, [user_id, movie_id, comment, field], (err, data) => {
         if (err) reject(err);
         resolve(data);
@@ -40,6 +33,7 @@ class ReviewStorage {
   static deleteReview(review_id) {
     return new Promise((resolve, reject) => {
       const query = "DELETE FROM review WHERE review_id = ?";
+
       db.query(query, [review_id], (err, data) => {
         if (err) reject(err);
         resolve(data);
