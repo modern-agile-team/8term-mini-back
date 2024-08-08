@@ -12,11 +12,14 @@ class ReviewStorage {
   static reviewAdd(reviewData) {
     // 추가
     const query =
-      "INSERT INTO list (user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
+      "INSERT INTO review (user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
     const user_id = reviewData.user_id;
     const movie_id = reviewData.movie_id;
     const comment = reviewData.comment;
     const field = reviewData.field;
+
+    console.log("Executing query:", query);
+    console.log("With values:", [user_id, movie_id, comment, field]);
 
     return db.query(query, [user_id, movie_id, comment, field]);
   }

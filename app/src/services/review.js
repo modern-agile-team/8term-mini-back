@@ -42,8 +42,9 @@ class Review {
     }
   }
 
-  async reivewAdd() {
+  async reviewAdd() {
     const body = this.body;
+    console.log(body);
     const response = await ReviewStorage.reviewAdd(body);
 
     return response;
