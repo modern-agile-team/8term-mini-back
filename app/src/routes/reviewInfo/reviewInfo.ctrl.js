@@ -3,26 +3,26 @@
 const Review = require("../../services/review");
 
 const process = {
-  reviewCheck: async (req, res) => {
+  checkReview: async (req, res) => {
     // 조회
     const review = new Review(req);
-    const response = await review.reviewCheck();
+    const response = await review.checkReview();
 
     return res.json(response);
   },
 
-  reviewAdd: async (req, res) => {
+  addReview: async (req, res) => {
     //추가
     const review = new Review(req);
-    const response = await review.reviewAdd();
+    const response = await review.addReview();
 
     return res.json(response);
   },
 
-  reviewRemove: async (req, res) => {
+  removeReview: async (req, res) => {
     //추가
     const review = new Review(req);
-    const response = await review.reviewRemove();
+    const response = await review.removeReview();
 
     return res.json(response);
   },

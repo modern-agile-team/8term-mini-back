@@ -3,13 +3,13 @@
 const db = require("../config/db");
 
 class ReviewStorage {
-  static getReviewInfo(movieId) {
+  static checkReviewInfo(movieId) {
     // 리뷰 조회
     const query = "SELECT * FROM review WHERE movie_id = ?";
     return db.query(query, [movieId]);
   }
 
-  static reviewAdd(userId, movieId, comment, field) {
+  static addReviewInfo(userId, movieId, comment, field) {
     // 리뷰 추가
     const query =
       "INSERT INTO review (user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
@@ -22,7 +22,7 @@ class ReviewStorage {
     return db.query(query, [reviewId]);
   }
 
-  static reviewRemove(reviewId) {
+  static removeReviewInfo(reviewId) {
     // 리뷰 삭제
     const query = "DELETE FROM review WHERE review_id = ?";
     return db.query(query, [reviewId]);

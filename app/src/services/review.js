@@ -8,9 +8,10 @@ class Review {
     this.params = req.params;
   }
 
-  async reviewCheck() {
+  async checkReview() {
+    // 리뷰 조회
     const movieId = this.params.id;
-    const response = await ReviewStorage.getReviewInfo(+movieId);
+    const response = await ReviewStorage.checkReviewInfo(+movieId);
 
     console.log(response[0]);
     try {
@@ -42,9 +43,10 @@ class Review {
     }
   }
 
-  async reviewAdd() {
+  async addReview() {
+    // 리뷰 추가
     const body = this.body;
-    const unprocessedResponse = await ReviewStorage.reviewAdd(
+    const unprocessedResponse = await ReviewStorage.addReviewInfo(
       body.userId,
       body.movieId,
       body.comment,
@@ -77,9 +79,10 @@ class Review {
     }
   }
 
-  async reviewRemove() {
+  async removeReview() {
+    // 리뷰 삭제
     const body = this.body;
-    const response = await ReviewStorage.reviewRemove(body.reviewId);
+    const response = await ReviewStorage.removeReviewInfo(body.reviewId);
 
     try {
       return { status: 200, data: response[0] };
