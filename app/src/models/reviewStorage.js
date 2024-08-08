@@ -25,6 +25,7 @@ class ReviewStorage {
     // 삭제
     return new Promise((resolve, reject) => {
       const query = "DELETE FROM review WHERE review_id = ?";
+
       db.query(query, [review_id], (err, data) => {
         if (err) reject(err);
         resolve(data);
