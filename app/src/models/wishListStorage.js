@@ -3,8 +3,8 @@
 const db = require("../config/db");
 
 class WishListStorage {
-  static getWishListInfo(id) {
-    const query = "SELECT * FROM wish_list WHERE wish_list_id = ?";
+  static getUserWishListInfo(id) {
+    const query = "SELECT * FROM wish_list WHERE user_id = ?";
     return db.query(query, [id]);
   }
 
@@ -13,7 +13,7 @@ class WishListStorage {
     return db.query(query);
   }
 
-  static addWishList(userId, movieId) {
+  static addWishListInfo(userId, movieId) {
     const query = "INSERT INTO wish_list (user_id, movie_id) VALUES (?, ?)";
     return db.query(query, [userId, movieId]);
   }

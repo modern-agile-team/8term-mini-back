@@ -3,9 +3,14 @@
 const WishList = require("../../services/wish-list");
 
 const process = {
-  getWishList: (req, res) => {
+  getUserWishList: (req, res) => {
     const wishList = new WishList(req);
-    const response = wishList.getWishList();
+    const response = wishList.getUserWishList();
+    return res.json(response);
+  },
+  addWishList: (req, res) => {
+    const wishList = new WishList(req);
+    const response = wishList.addWishList();
     return res.json(response);
   },
 };
