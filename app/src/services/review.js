@@ -22,35 +22,30 @@ class Review {
       }
       return { status: 200, data: response[0] };
     } catch (error) {
-      if (error.message.includes("ECONNREFUSED")) {
-        return {
-          status: 503,
-          data: { error: "데이터베이스 연결 오류" },
-        };
-      } else if (error.message.includes("ER_PARSE_ERROR")) {
-        return {
-          status: 500,
-          data: { error: "SQL 구문 오류" },
-        };
-      } else if (error.message.includes("ETIMEOUT")) {
-        return {
-          status: 504,
-          data: { error: "데이터베이스 연결 시간 초과" },
-        };
-      } else {
-        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      switch (error.code) {
+        case "ECONNREFUSED":
+          return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+        case "ER_PARSE_ERROR":
+          return { status: 500, data: { error: "SQL 구문 오류" } };
+        case "ETIMEOUT":
+          return {
+            status: 504,
+            data: { error: "데이터베이스 연결 시간 초과" },
+          };
+        default:
+          return { status: 500, data: { error: "일반적인 서버 오류" } };
       }
     }
   }
 
   async addReview() {
     // 리뷰 추가
-    const body = this.body;
+    const { userId, movieId, comment, field } = this.body;
     const unprocessedResponse = await ReviewStorage.addReviewInfo(
-      body.userId,
-      body.movieId,
-      body.comment,
-      body.field
+      userId,
+      movieId,
+      comment,
+      field
     );
     const response = await ReviewStorage.processResponse(
       unprocessedResponse[0].insertId
@@ -58,23 +53,18 @@ class Review {
     try {
       return { status: 200, data: response[0] };
     } catch (error) {
-      if (error.message.includes("ECONNREFUSED")) {
-        return {
-          status: 503,
-          data: { error: "데이터베이스 연결 오류" },
-        };
-      } else if (error.message.includes("ER_PARSE_ERROR")) {
-        return {
-          status: 500,
-          data: { error: "SQL 구문 오류" },
-        };
-      } else if (error.message.includes("ETIMEOUT")) {
-        return {
-          status: 504,
-          data: { error: "데이터베이스 연결 시간 초과" },
-        };
-      } else {
-        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      switch (error.code) {
+        case "ECONNREFUSED":
+          return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+        case "ER_PARSE_ERROR":
+          return { status: 500, data: { error: "SQL 구문 오류" } };
+        case "ETIMEOUT":
+          return {
+            status: 504,
+            data: { error: "데이터베이스 연결 시간 초과" },
+          };
+        default:
+          return { status: 500, data: { error: "일반적인 서버 오류" } };
       }
     }
   }
@@ -87,23 +77,18 @@ class Review {
     try {
       return { status: 200, data: response[0] };
     } catch (error) {
-      if (error.message.includes("ECONNREFUSED")) {
-        return {
-          status: 503,
-          data: { error: "데이터베이스 연결 오류" },
-        };
-      } else if (error.message.includes("ER_PARSE_ERROR")) {
-        return {
-          status: 500,
-          data: { error: "SQL 구문 오류" },
-        };
-      } else if (error.message.includes("ETIMEOUT")) {
-        return {
-          status: 504,
-          data: { error: "데이터베이스 연결 시간 초과" },
-        };
-      } else {
-        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      switch (error.code) {
+        case "ECONNREFUSED":
+          return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+        case "ER_PARSE_ERROR":
+          return { status: 500, data: { error: "SQL 구문 오류" } };
+        case "ETIMEOUT":
+          return {
+            status: 504,
+            data: { error: "데이터베이스 연결 시간 초과" },
+          };
+        default:
+          return { status: 500, data: { error: "일반적인 서버 오류" } };
       }
     }
   }
