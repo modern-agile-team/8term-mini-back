@@ -3,14 +3,14 @@
 const db = require("../config/db");
 
 class WishListStorage {
-  static getUserWishListInfo(id) {
+  static getUserWishListInfo(userId) {
     const query = "SELECT * FROM wish_list WHERE user_id = ?";
-    return db.query(query, [id]);
+    return db.query(query, [userId]);
   }
 
-  static getWishListInfoAll() {
-    const query = "SELECT * FROM wish_list";
-    return db.query(query);
+  static processWishListInfo(wishListId) {
+    const query = "SELECT * FROM wish_list WHERE wish_list_id = ?";
+    return db.query(query, [wishListId]);
   }
 
   static addWishListInfo(userId, movieId) {
@@ -18,7 +18,7 @@ class WishListStorage {
     return db.query(query, [userId, movieId]);
   }
 
-  static deleteWishList(id) {
+  static removeWishListInfo(id) {
     const query = "DELETE FROM wish_list WHERE wish_list_id = ?";
     return db.query(query, [id]);
   }
