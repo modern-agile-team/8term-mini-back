@@ -40,12 +40,11 @@ class Review {
 
   async addReview() {
     // 리뷰 추가
-    const { userId, movieId, comment, field } = this.body;
+    const { userId, movieId, comment } = this.body;
     const unprocessedResponse = await ReviewStorage.addReviewInfo(
       userId,
       movieId,
-      comment,
-      field
+      comment
     );
     const response = await ReviewStorage.processResponse(
       unprocessedResponse[0].insertId

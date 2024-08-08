@@ -9,11 +9,11 @@ class ReviewStorage {
     return db.query(query, [movieId]);
   }
 
-  static addReviewInfo(userId, movieId, comment, field) {
+  static addReviewInfo(userId, movieId, comment) {
     // 리뷰 추가
     const query =
-      "INSERT INTO review (user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
-    return db.query(query, [userId, movieId, comment, field]);
+      "INSERT INTO review (user_id, movie_id, comment) VALUES (?, ?, ?)";
+    return db.query(query, [userId, movieId, comment]);
   }
 
   static processResponse(reviewId) {
