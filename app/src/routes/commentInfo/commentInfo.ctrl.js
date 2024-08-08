@@ -4,7 +4,7 @@ const Comment = require("../../services/comment");
 
 const process = {
   getComment: async (req, res) => {
-    // 조회
+    // 댓글 조회
     const comment = new Comment(req);
     const response = await comment.getComment();
 
@@ -12,7 +12,7 @@ const process = {
   },
 
   addComment: async (req, res) => {
-    //추가
+    // 댓글 추가
     const comment = new Comment(req);
     const response = await comment.addComment();
 
@@ -20,7 +20,7 @@ const process = {
   },
 
   removeComment: async (req, res) => {
-    //추가
+    // 댓글 삭제
     const comment = new Comment(req);
     const response = await comment.removeComment();
 

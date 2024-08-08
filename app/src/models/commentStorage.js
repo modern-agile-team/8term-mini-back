@@ -9,11 +9,11 @@ class CommentStorage {
     return db.query(query, [reviewId]);
   }
 
-  static addCommentInfo(userId, movieId, comment) {
+  static addCommentInfo(userId, reviewId, text) {
     // 댓글 추가
     const query =
-      "INSERT INTO comment (user_id, movie_id, comment) VALUES (?, ?, ?)";
-    return db.query(query, [userId, movieId, comment]);
+      "INSERT INTO comment (user_id, review_id, text) VALUES (?, ?, ?)";
+    return db.query(query, [userId, reviewId, text]);
   }
 
   static removeCommentInfo(commentId) {

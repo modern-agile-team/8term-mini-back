@@ -35,11 +35,11 @@ class Comment {
 
   async addComment() {
     // 댓글 추가
-    const { userId, movieId, comment } = this.body;
+    const { userId, reviewId, text } = this.body;
     const unprocessedResponse = await CommentStorage.addCommentInfo(
       userId,
-      movieId,
-      comment
+      reviewId,
+      text
     );
     const response = await CommentStorage.processResponse(
       unprocessedResponse[0].insertId
