@@ -8,10 +8,10 @@ class Comment {
     this.params = req.params;
   }
 
-  async checkComment() {
+  async getComment() {
     // 댓글 조회
     const reviewId = this.params.id;
-    const response = await CommentStorage.checkCommentInfo(+reviewId);
+    const response = await CommentStorage.getCommentInfo(+reviewId);
 
     console.log(response[0]);
     try {

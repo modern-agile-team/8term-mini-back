@@ -8,10 +8,10 @@ class Review {
     this.params = req.params;
   }
 
-  async checkReview() {
+  async getReview() {
     // 리뷰 조회
     const movieId = this.params.id;
-    const response = await ReviewStorage.checkReviewInfo(+movieId);
+    const response = await ReviewStorage.getReviewInfo(+movieId);
 
     console.log(response[0]);
     try {

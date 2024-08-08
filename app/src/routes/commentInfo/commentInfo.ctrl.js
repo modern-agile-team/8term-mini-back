@@ -3,10 +3,10 @@
 const Comment = require("../../services/comment");
 
 const process = {
-  checkComment: async (req, res) => {
+  getComment: async (req, res) => {
     // 조회
     const comment = new Comment(req);
-    const response = await comment.checkComment();
+    const response = await comment.getComment();
 
     return res.json(response);
   },

@@ -3,7 +3,7 @@
 const db = require("../config/db");
 
 class ReviewStorage {
-  static checkReviewInfo(movieId) {
+  static getReviewInfo(movieId) {
     // 리뷰 조회
     const query = "SELECT * FROM review WHERE movie_id = ?";
     return db.query(query, [movieId]);

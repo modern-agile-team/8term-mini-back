@@ -3,7 +3,7 @@
 const db = require("../config/db");
 
 class CommentStorage {
-  static checkCommentInfo(reviewId) {
+  static getCommentInfo(reviewId) {
     // 댓글 조회
     const query = "SELECT * FROM comment WHERE review_id = ?";
     return db.query(query, [reviewId]);
