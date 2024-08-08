@@ -1,6 +1,5 @@
 "use strict";
-
-import UserService from "../../services/userService";
+const UserService = require("../../services/userService");
 
 const process = {
   signUp: async (req, res) => {
@@ -11,4 +10,4 @@ const process = {
   },
 };
 
-export default signUp;
+module.exports = { process };

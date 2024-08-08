@@ -8,6 +8,8 @@ dotenv.config();
 const app = express();
 const home = require("./src/routes/home");
 
+app.use(express.json());
+
 //앱 세팅
 app.set("views", "./src/views");
 

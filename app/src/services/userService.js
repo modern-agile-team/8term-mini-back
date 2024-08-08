@@ -1,6 +1,6 @@
 "use strict";
 
-import UserStorage from "../models/userStorage";
+const UserStorage = require("../models/userStorage");
 
 class UserService {
   constructor(req) {
@@ -9,12 +9,13 @@ class UserService {
 
   async signUp() {
     const userInfo = this.body;
-    const response = await UserStorage.postUserInfo(
-      userInfo.nickname,
-      userInfo.id,
-      userInfo.password
-    );
+    const response = await UserStorage.postUserInfo({
+      nickname: userInfo.nickname,
+      id: userInfo.id,
+      password: userInfo.password,
+    });
+    return response;
   }
 }
 
-export default UserService;
+module.exports = UserService;
