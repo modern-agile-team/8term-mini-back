@@ -3,42 +3,29 @@
 const db = require("../config/db");
 
 class ReviewStorage {
-  static getReviewInfo(movie_id) {
-    return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM review WHERE movie_id = ?";
-
-      db.query(query, [movie_id], (err, data) => {
-        if (err) reject(err);
-        resolve(data);
-      });
-    });
+  static checkReviewInfo(movieId) {
+    // 리뷰 조회
+    const query = "SELECT * FROM review WHERE movie_id = ?";
+    return db.query(query, [movieId]);
   }
 
-  static addReview(review_data) {
-    return new Promise((resolve, reject) => {
-      const query =
-        "INSERT INTO review ( user_id, movie_id, comment, Field) VALUES (?, ?, ?, ?)";
-      const user_id = review_data.user_id;
-      const movie_id = review_data.movie_id;
-      const comment = review_data.comment;
-      const field = review_data.field;
-
-      db.query(query, [user_id, movie_id, comment, field], (err, data) => {
-        if (err) reject(err);
-        resolve(data);
-      });
-    });
+  static addReviewInfo(userId, movieId, comment) {
+    // 리뷰 추가
+    const query =
+      "INSERT INTO review (user_id, movie_id, comment) VALUES (?, ?, ?)";
+    return db.query(query, [userId, movieId, comment]);
   }
 
-  static deleteReview(review_id) {
-    return new Promise((resolve, reject) => {
-      const query = "DELETE FROM review WHERE review_id = ?";
+  static processResponse(reviewId) {
+    // 추가된 데이터를 리턴
+    const query = "SELECT * FROM review WHERE review_id = ?";
+    return db.query(query, [reviewId]);
+  }
 
-      db.query(query, [review_id], (err, data) => {
-        if (err) reject(err);
-        resolve(data);
-      });
-    });
+  static removeReviewInfo(reviewId) {
+    // 리뷰 삭제
+    const query = "DELETE FROM review WHERE review_id = ?";
+    return db.query(query, [reviewId]);
   }
 }
 
