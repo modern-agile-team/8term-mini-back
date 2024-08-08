@@ -11,6 +11,6 @@ router.get("/movies/:id", movieInfoCtrl.process.getMovie);
 
 router.get("/movies/:id/reviews", reviewInfoCtrl.process.reviewCheck); // 뒤에 페이지 쿼리 추가해야 됨
 router.post("/movies/:id/reviews", reviewInfoCtrl.process.reviewAdd);
-router.delete("/users/my/reveiws/:id", reviewInfoCtrl.process.reviewRemove);
+router.delete("/users/my/reviews/:id", reviewInfoCtrl.process.reviewRemove);
 
 module.exports = router;

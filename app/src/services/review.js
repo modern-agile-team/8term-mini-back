@@ -53,7 +53,6 @@ class Review {
     const response = await ReviewStorage.processResponse(
       unprocessedResponse[0].insertId
     );
-    console.log(response[0]);
     try {
       return { status: 200, data: response[0] };
     } catch (error) {
@@ -80,8 +79,7 @@ class Review {
 
   async reviewRemove() {
     const body = this.body;
-    console.log(body);
-    const response = await ReviewStorage.reviewRemove(body);
+    const response = await ReviewStorage.reviewRemove(body.reviewId);
 
     try {
       return { status: 200, data: response[0] };
