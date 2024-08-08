@@ -44,10 +44,67 @@ class Review {
 
   async reviewAdd() {
     const body = this.body;
-    console.log(body);
-    const response = await ReviewStorage.reviewAdd(body);
+    const unprocessedResponse = await ReviewStorage.reviewAdd(
+      body.userId,
+      body.movieId,
+      body.comment,
+      body.field
+    );
+    const response = await ReviewStorage.processResponse(
+      unprocessedResponse[0].insertId
+    );
+    console.log(response[0]);
+    try {
+      return { status: 200, data: response[0] };
+    } catch (error) {
+      if (error.message.includes("ECONNREFUSED")) {
+        return {
+          status: 503,
+          data: { error: "데이터베이스 연결 오류" },
+        };
+      } else if (error.message.includes("ER_PARSE_ERROR")) {
+        return {
+          status: 500,
+          data: { error: "SQL 구문 오류" },
+        };
+      } else if (error.message.includes("ETIMEOUT")) {
+        return {
+          status: 504,
+          data: { error: "데이터베이스 연결 시간 초과" },
+        };
+      } else {
+        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      }
+    }
+  }
 
-    return response;
+  async reviewRemove() {
+    const body = this.body;
+    console.log(body);
+    const response = await ReviewStorage.reviewRemove(body);
+
+    try {
+      return { status: 200, data: response[0] };
+    } catch (error) {
+      if (error.message.includes("ECONNREFUSED")) {
+        return {
+          status: 503,
+          data: { error: "데이터베이스 연결 오류" },
+        };
+      } else if (error.message.includes("ER_PARSE_ERROR")) {
+        return {
+          status: 500,
+          data: { error: "SQL 구문 오류" },
+        };
+      } else if (error.message.includes("ETIMEOUT")) {
+        return {
+          status: 504,
+          data: { error: "데이터베이스 연결 시간 초과" },
+        };
+      } else {
+        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      }
+    }
   }
 }
 

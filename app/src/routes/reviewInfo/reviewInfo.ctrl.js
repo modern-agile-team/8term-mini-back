@@ -18,6 +18,14 @@ const process = {
 
     return res.json(response);
   },
+
+  reviewRemove: async (req, res) => {
+    //추가
+    const review = new Review(req);
+    const response = await review.reviewRemove();
+
+    return res.json(response);
+  },
 };
 
 module.exports = {
