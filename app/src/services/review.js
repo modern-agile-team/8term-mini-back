@@ -36,16 +36,19 @@ class Review {
   async addReview() {
     // 리뷰 추가
     const { userId, movieId, comment } = this.body;
-    const unprocessedResponse = await ReviewStorage.addReviewInfo(
-      userId,
-      movieId,
-      comment
-    );
-    const response = await ReviewStorage.processResponse(
-      unprocessedResponse[0].insertId
-    );
+
     try {
-      return { status: 200, data: response[0] };
+      const unprocessedResponse = await ReviewStorage.addReviewInfo(
+        userId,
+        movieId,
+        comment
+      );
+      if (unprocessedResponse.affectedRows) {
+        const response = await ReviewStorage.processResponse(
+          unprocessedResponse[0].insertId
+        );
+        return { status: 200, data: response[0] };
+      }
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":
@@ -66,10 +69,12 @@ class Review {
   async removeReview() {
     // 리뷰 삭제
     const body = this.body;
-    const response = await ReviewStorage.removeReviewInfo(body.reviewId);
 
     try {
-      return { status: 200, data: response[0] };
+      const response = await ReviewStorage.removeReviewInfo(body.reviewId);
+      if (response.affectedRows) {
+        return { status: 200 };
+      }
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":

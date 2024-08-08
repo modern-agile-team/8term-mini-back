@@ -36,16 +36,18 @@ class Comment {
   async addComment() {
     // 댓글 추가
     const { userId, reviewId, text } = this.body;
-    const unprocessedResponse = await CommentStorage.addCommentInfo(
-      userId,
-      reviewId,
-      text
-    );
-    const response = await CommentStorage.processResponse(
-      unprocessedResponse[0].insertId
-    );
     try {
-      return { status: 200, data: response[0] };
+      const unprocessedResponse = await CommentStorage.addCommentInfo(
+        userId,
+        reviewId,
+        text
+      );
+      if (unprocessedResponse.affectedRows) {
+        const response = await CommentStorage.processResponse(
+          unprocessedResponse[0].insertId
+        );
+        return { status: 200, data: response[0] };
+      }
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":
@@ -66,10 +68,12 @@ class Comment {
   async removeComment() {
     // 댓글 삭제
     const body = this.body;
-    const response = await CommentStorage.removeCommentInfo(body.commentId);
 
     try {
-      return { status: 200, data: response[0] };
+      const response = await CommentStorage.removeCommentInfo(body.commentId);
+      if (response.affectedRows) {
+        return { status: 200 };
+      }
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":
