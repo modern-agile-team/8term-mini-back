@@ -15,11 +15,6 @@ class Review {
 
     console.log(response[0]);
     try {
-      if (!response[0]) {
-        return {
-          message: "해당 영화의 리뷰가 존재하지 않습니다.",
-        };
-      }
       return { status: 200, data: response[0] };
     } catch (error) {
       switch (error.code) {
