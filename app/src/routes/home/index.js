@@ -22,6 +22,6 @@ router.patch("/users/my/reviews/:id", reviewInfoCtrl.process.updateReview);
 router.get("/reviews/:id/comments", commentInfoCtrl.process.getComment);
 router.post("/reviews/:id/comments", commentInfoCtrl.process.addComment);
 router.delete("/users/my/comments/:id", commentInfoCtrl.process.removeComment);
-// router.patch("/users/my/comments/:id", commentInfoCtrl.process.updateComment);
+router.patch("/users/my/comments/:id", commentInfoCtrl.process.updateComment);
 
 module.exports = router;

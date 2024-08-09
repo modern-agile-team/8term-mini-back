@@ -26,6 +26,14 @@ const process = {
 
     return res.json(response);
   },
+
+  updateComment: async (req, res) => {
+    // 댓글 수정
+    const review = new Comment(req);
+    const response = await review.updateComment();
+
+    return res.json(response);
+  },
 };
 
 module.exports = {
