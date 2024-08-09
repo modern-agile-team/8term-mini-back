@@ -23,6 +23,12 @@ class ReviewStorage {
     return db.query(query, [reviewId]);
   }
 
+  static updateReviewInfo(reviewId, comment) {
+    // 리뷰 수정
+    const query = "UPDATE review SET comment = ? WHERE review_id = ?";
+    return db.query(query, [comment, reviewId]);
+  }
+
   static getResponse(reviewId) {
     // 추가된 데이터를 리턴
     const query = "SELECT * FROM review WHERE review_id = ?";

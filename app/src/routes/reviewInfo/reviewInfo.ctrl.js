@@ -26,6 +26,14 @@ const process = {
 
     return res.json(response);
   },
+
+  updateReview: async (req, res) => {
+    //추가
+    const review = new Review(req);
+    const response = await review.updateReview();
+
+    return res.json(response);
+  },
 };
 
 module.exports = {
