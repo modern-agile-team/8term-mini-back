@@ -6,15 +6,14 @@ class Review {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
-    this.page = parseInt(req.query.page, 10) || 1;
-    this.size = parseInt(req.query.size, 10) || 5;
+    this.query = req.query;
   }
 
   async getReview() {
     // 리뷰 조회
     const movieId = this.params.id;
-    const page = this.page;
-    const size = this.size;
+    const page = parseInt(this.query.page, 10) || 1;
+    const size = parseInt(this.query.size, 10) || 5;
 
     const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
 

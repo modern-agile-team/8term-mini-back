@@ -6,12 +6,16 @@ class Comment {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
+    this.query = req.query;
   }
 
   async getComment() {
     // 댓글 조회
     const reviewId = this.params.id;
-    const response = await CommentStorage.getCommentInfo(+reviewId);
+    const page = parseInt(this.query.page, 10) || 1;
+    const size = parseInt(this.query.size, 10) || 5;
+
+    const response = await CommentStorage.getCommentInfo(+reviewId, page, size);
 
     try {
       return { status: 200, data: response[0] };

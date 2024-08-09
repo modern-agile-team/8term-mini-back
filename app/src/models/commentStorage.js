@@ -3,10 +3,11 @@
 const db = require("../config/db");
 
 class CommentStorage {
-  static getCommentInfo(reviewId) {
+  static getCommentInfo(reviewId, page, size) {
     // 댓글 조회
-    const query = "SELECT * FROM comment WHERE review_id = ?";
-    return db.query(query, [reviewId]);
+    const offset = (page - 1) * size;
+    const query = "SELECT * FROM comment WHERE review_id = ? LIMIT ? OFFSET ?";
+    return db.query(query, [reviewId, size, offset]);
   }
 
   static addCommentInfo(userId, reviewId, text) {
