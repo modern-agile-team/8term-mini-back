@@ -5,7 +5,7 @@ const router = express.Router();
 
 const movieInfoCtrl = require("../movieInfo/movieInfo.ctrl");
 const reviewInfoCtrl = require("../reviewInfo/reviewInfo.ctrl");
-const wishListCtrl = require("../wish-list/wish-list.ctrl");
+const wishListCtrl = require("../wishList/wishList.ctrl");
 
 router.get("/movies", movieInfoCtrl.process.getMovie);
 router.get("/movies/:id", movieInfoCtrl.process.getMovie);
