@@ -13,7 +13,6 @@ class Comment {
     const reviewId = this.params.id;
     const response = await CommentStorage.getCommentInfo(+reviewId);
 
-    console.log(response[0]);
     try {
       return { status: 200, data: response[0] };
     } catch (error) {
@@ -37,14 +36,14 @@ class Comment {
     // 댓글 추가
     const { userId, reviewId, text } = this.body;
     try {
-      const unprocessedResponse = await CommentStorage.addCommentInfo(
+      const ungetResponse = await CommentStorage.addCommentInfo(
         userId,
         reviewId,
         text
       );
-      if (unprocessedResponse.affectedRows) {
-        const response = await CommentStorage.processResponse(
-          unprocessedResponse[0].insertId
+      if (ungetResponse.affectedRows) {
+        const response = await CommentStorage.getResponse(
+          ungetResponse[0].insertId
         );
         return { status: 200, data: response[0] };
       }

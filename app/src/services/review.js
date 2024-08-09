@@ -18,7 +18,6 @@ class Review {
 
     const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
 
-    console.log(response[0]);
     try {
       return { status: 200, data: response[0] };
     } catch (error) {
@@ -43,14 +42,14 @@ class Review {
     const { userId, movieId, comment } = this.body;
 
     try {
-      const unprocessedResponse = await ReviewStorage.addReviewInfo(
+      const ungetResponse = await ReviewStorage.addReviewInfo(
         userId,
         movieId,
         comment
       );
-      if (unprocessedResponse.affectedRows) {
-        const response = await ReviewStorage.processResponse(
-          unprocessedResponse[0].insertId
+      if (ungetResponse.affectedRows) {
+        const response = await ReviewStorage.getResponse(
+          ungetResponse[0].insertId
         );
         return { status: 200, data: response[0] };
       }
