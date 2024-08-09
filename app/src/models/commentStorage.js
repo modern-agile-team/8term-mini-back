@@ -22,7 +22,7 @@ class CommentStorage {
     return db.query(query, [commentId]);
   }
 
-  static processResponse(commentId) {
+  static getResponse(commentId) {
     // 추가된 데이터를 리턴
     const query = "SELECT * FROM comment WHERE comment_id = ?";
     return db.query(query, [commentId]);

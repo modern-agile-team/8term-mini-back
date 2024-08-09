@@ -66,10 +66,10 @@ class Comment {
 
   async removeComment() {
     // 댓글 삭제
-    const body = this.body;
+    const params = this.params;
 
     try {
-      const response = await CommentStorage.removeCommentInfo(body.commentId);
+      const response = await CommentStorage.removeCommentInfo(params.id);
       if (response.affectedRows) {
         return { status: 200 };
       }

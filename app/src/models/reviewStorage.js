@@ -23,7 +23,7 @@ class ReviewStorage {
     return db.query(query, [reviewId]);
   }
 
-  static processResponse(reviewId) {
+  static getResponse(reviewId) {
     // 추가된 데이터를 리턴
     const query = "SELECT * FROM review WHERE review_id = ?";
     return db.query(query, [reviewId]);

@@ -72,10 +72,10 @@ class Review {
 
   async removeReview() {
     // 리뷰 삭제
-    const body = this.body;
+    const params = this.params;
 
     try {
-      const response = await ReviewStorage.removeReviewInfo(body.reviewId);
+      const response = await ReviewStorage.removeReviewInfo(params.id);
       if (response.affectedRows) {
         return { status: 200 };
       }
