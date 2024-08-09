@@ -15,9 +15,8 @@ class Review {
     const page = parseInt(this.query.page, 10) || 1;
     const size = parseInt(this.query.size, 10) || 5;
 
-    const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
-
     try {
+      const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
       return { status: 200, data: response[0] };
     } catch (error) {
       switch (error.code) {
@@ -46,7 +45,7 @@ class Review {
         movieId,
         comment
       );
-      if (ungetResponse.affectedRows) {
+      if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(
           ungetResponse[0].insertId
         );
@@ -75,7 +74,7 @@ class Review {
 
     try {
       const response = await ReviewStorage.removeReviewInfo(params.id);
-      if (response.affectedRows) {
+      if (response[0].affectedRows) {
         return { status: 200 };
       }
     } catch (error) {
