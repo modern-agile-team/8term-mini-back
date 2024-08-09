@@ -19,16 +19,16 @@ class WishList {
 
       switch (error.code) {
         case "ECONNREFUSED":
-          return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+          return { status: 503, data: { error: "서버 오류" } };
         case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "SQL 구문 오류" } };
+          return { status: 500, data: { error: "서버 오류" } };
         case "ETIMEOUT":
           return {
             status: 504,
-            data: { error: "데이터베이스 연결 시간 초과" },
+            data: { error: "서버 오류" },
           };
         default:
-          return { status: 500, data: { error: "일반적인 서버 오류" } };
+          return { status: 500, data: { error: "서버 오류" } };
       }
     }
   }
@@ -37,9 +37,10 @@ class WishList {
     const userId = Number(this.params.id);
     const movieId = Number(this.body.movieId);
     try {
-      const check = await WishListStorage.getUserWishListInfo(userId);
+      const check = await WishListStorage.getWishListInfo(userId, movieId);
+
       if (check) {
-        return { status: 500, data: { error: "이미 찜이 생성됨" } };
+        return { status: 400, data: { error: "이미 찜이 생성됨" } };
       }
       const wishListId = (
         await WishListStorage.addWishListInfo(userId, movieId)
@@ -53,16 +54,16 @@ class WishList {
 
       switch (error.code) {
         case "ECONNREFUSED":
-          return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+          return { status: 503, data: { error: "서버 오류" } };
         case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "SQL 구문 오류" } };
+          return { status: 500, data: { error: "서버 오류" } };
         case "ETIMEOUT":
           return {
             status: 504,
-            data: { error: "데이터베이스 연결 시간 초과" },
+            data: { error: "서버 오류" },
           };
         default:
-          return { status: 500, data: { error: "일반적인 서버 오류" } };
+          return { status: 500, data: { error: "서버 오류" } };
       }
     }
   }
@@ -74,23 +75,23 @@ class WishList {
         .affectedRows;
       return check
         ? { status: 200 }
-        : { status: 500, data: { error: "지워진 값이 없습니다." } };
+        : { status: 400, data: { error: "지워진 값이 없습니다." } };
     } catch (error) {
       console.error("오류 메시지:", error.message);
       console.error("오류 코드:", error.code);
 
       switch (error.code) {
         case "ECONNREFUSED":
-          return { status: 503, data: { error: "데이터베이스 연결 오류" } };
+          return { status: 503, data: { error: "서버 오류" } };
         case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "SQL 구문 오류" } };
+          return { status: 500, data: { error: "서버 오류" } };
         case "ETIMEOUT":
           return {
             status: 504,
-            data: { error: "데이터베이스 연결 시간 초과" },
+            data: { error: "서버 오류" },
           };
         default:
-          return { status: 500, data: { error: "일반적인 서버 오류" } };
+          return { status: 500, data: { error: "서버 오류" } };
       }
     }
   }

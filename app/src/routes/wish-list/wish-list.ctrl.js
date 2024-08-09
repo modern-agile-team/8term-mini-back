@@ -1,12 +1,11 @@
 "use strict";
 
-const WishList = require("../../services/wish-list");
+const WishList = require("../../services/wishList");
 
 const process = {
   getUserWishList: async (req, res) => {
     const wishList = new WishList(req);
     const response = await wishList.getUserWishList();
-    console.log(response);
     return res.json(response);
   },
   addWishList: async (req, res) => {
