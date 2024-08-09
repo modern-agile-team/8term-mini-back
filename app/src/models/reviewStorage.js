@@ -3,10 +3,11 @@
 const db = require("../config/db");
 
 class ReviewStorage {
-  static getReviewInfo(movieId) {
+  static getReviewInfo(movieId, page, size) {
     // 리뷰 조회
-    const query = "SELECT * FROM review WHERE movie_id = ?";
-    return db.query(query, [movieId]);
+    const offset = (page - 1) * size;
+    const query = "SELECT * FROM review WHERE movie_id = ? LIMIT ? OFFSET ?";
+    return db.query(query, [movieId, size, offset]);
   }
 
   static addReviewInfo(userId, movieId, comment) {
