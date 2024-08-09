@@ -23,13 +23,10 @@ class ReviewStorage {
     return db.query(query, [reviewId]);
   }
 
-  static async updateReviewInfo(reviewId, comment) {
+  static updateReviewInfo(reviewId, comment) {
     // 리뷰 수정
     const query = "UPDATE review SET comment = ? WHERE review_id = ?";
-    await db.query(query, [comment, reviewId]);
-
-    const getQuery = "SELECT * FROM review WHERE review_id = ?";
-    return db.query(getQuery, [reviewId]);
+    return db.query(query, [comment, reviewId]);
   }
 
   static getResponse(reviewId) {

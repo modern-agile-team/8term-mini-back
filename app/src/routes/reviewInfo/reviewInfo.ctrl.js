@@ -4,7 +4,7 @@ const Review = require("../../services/review");
 
 const process = {
   getReview: async (req, res) => {
-    // 조회
+    // 리뷰 조회
     const review = new Review(req);
     const response = await review.getReview();
 
@@ -12,7 +12,7 @@ const process = {
   },
 
   addReview: async (req, res) => {
-    //추가
+    // 리뷰 추가
     const review = new Review(req);
     const response = await review.addReview();
 
@@ -20,7 +20,7 @@ const process = {
   },
 
   removeReview: async (req, res) => {
-    //추가
+    // 리뷰 삭제
     const review = new Review(req);
     const response = await review.removeReview();
 
@@ -28,7 +28,7 @@ const process = {
   },
 
   updateReview: async (req, res) => {
-    //추가
+    // 리뷰 수정
     const review = new Review(req);
     const response = await review.updateReview();
 
