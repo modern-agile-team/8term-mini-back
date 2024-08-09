@@ -100,16 +100,11 @@ class Review {
     const body = this.body;
 
     try {
-      const ungetResponse = await ReviewStorage.updateReviewInfo(
+      const response = await ReviewStorage.updateReviewInfo(
         params.id,
         body.comment
       );
-      if (ungetResponse[0].affectedRows) {
-        const response = await ReviewStorage.getResponse(
-          ungetResponse[0].insertId
-        );
-        return { status: 200, data: response[0] };
-      }
+      return { status: 200, data: response[0] };
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":

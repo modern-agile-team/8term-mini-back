@@ -23,10 +23,13 @@ class CommentStorage {
     return db.query(query, [commentId]);
   }
 
-  static updateCommentInfo(commentId, text) {
+  static async updateCommentInfo(commentId, text) {
     // 댓글 수정
     const query = "UPDATE comment SET text = ? WHERE comment_id = ?";
-    return db.query(query, [text, commentId]);
+    await db.query(query, [text, commentId]);
+
+    const getQuery = "SELECT * FROM comment WHERE comment_id = ?";
+    return db.query(getQuery, [commentId]);
   }
 
   static getResponse(commentId) {

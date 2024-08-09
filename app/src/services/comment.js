@@ -104,16 +104,11 @@ class Comment {
     const body = this.body;
 
     try {
-      const ungetResponse = await CommentStorage.updateCommentInfo(
+      const response = await CommentStorage.updateCommentInfo(
         params.id,
         body.text
       );
-      if (ungetResponse[0].affectedRows) {
-        const response = await CommentStorage.getResponse(
-          ungetResponse[0].insertId
-        );
-        return { status: 200, data: response[0] };
-      }
+      return { status: 200, data: response[0] };
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":
