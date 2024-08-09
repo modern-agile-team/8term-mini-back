@@ -38,8 +38,7 @@ class WishList {
     const movieId = Number(this.body.movieId);
     try {
       const check = await WishListStorage.getWishListInfo(userId, movieId);
-
-      if (check) {
+      if (!check[0]) {
         return { status: 400, data: { error: "이미 찜이 생성됨" } };
       }
       const wishListId = (
