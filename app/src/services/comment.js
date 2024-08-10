@@ -1,17 +1,17 @@
 "use strict";
 
-const ReviewStorage = require("../models/reviewStorage");
+const CommentStorage = require("../models/commentStorage");
 
-class Review {
+class Comment {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
   }
 
-  async getReview() {
-    // 리뷰 조회
-    const movieId = this.params.id;
-    const response = await ReviewStorage.getReviewInfo(+movieId);
+  async getComment() {
+    // 댓글 조회
+    const reviewId = this.params.id;
+    const response = await CommentStorage.getCommentInfo(+reviewId);
 
     console.log(response[0]);
     try {
@@ -33,18 +33,17 @@ class Review {
     }
   }
 
-  async addReview() {
-    // 리뷰 추가
-    const { userId, movieId, comment } = this.body;
-
+  async addComment() {
+    // 댓글 추가
+    const { userId, reviewId, text } = this.body;
     try {
-      const unprocessedResponse = await ReviewStorage.addReviewInfo(
+      const unprocessedResponse = await CommentStorage.addCommentInfo(
         userId,
-        movieId,
-        comment
+        reviewId,
+        text
       );
       if (unprocessedResponse.affectedRows) {
-        const response = await ReviewStorage.processResponse(
+        const response = await CommentStorage.processResponse(
           unprocessedResponse[0].insertId
         );
         return { status: 200, data: response[0] };
@@ -66,12 +65,12 @@ class Review {
     }
   }
 
-  async removeReview() {
-    // 리뷰 삭제
+  async removeComment() {
+    // 댓글 삭제
     const body = this.body;
 
     try {
-      const response = await ReviewStorage.removeReviewInfo(body.reviewId);
+      const response = await CommentStorage.removeCommentInfo(body.commentId);
       if (response.affectedRows) {
         return { status: 200 };
       }
@@ -93,4 +92,4 @@ class Review {
   }
 }
 
-module.exports = Review;
+module.exports = Comment;

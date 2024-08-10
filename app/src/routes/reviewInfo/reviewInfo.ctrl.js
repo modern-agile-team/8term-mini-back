@@ -3,10 +3,10 @@
 const Review = require("../../services/review");
 
 const process = {
-  checkReview: async (req, res) => {
+  getReview: async (req, res) => {
     // 조회
     const review = new Review(req);
-    const response = await review.checkReview();
+    const response = await review.getReview();
 
     return res.json(response);
   },
