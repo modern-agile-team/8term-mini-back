@@ -3,6 +3,11 @@
 const ReviewLike = require("../../services/reviewLike");
 
 const process = {
+  getReviewLike: async (req, res) => {
+    const reviewLike = new ReviewLike(req);
+    const response = await reviewLike.getReviewLike();
+    return res.json(response);
+  },
   getUserReviewLike: async (req, res) => {
     const reviewLike = new ReviewLike(req);
     const response = await reviewLike.getUserReviewLike();

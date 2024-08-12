@@ -8,7 +8,7 @@ class ReviewLike {
     this.params = req.params;
   }
 
-  async getUserReviewLike() {
+  async getReviewLike() {
     // 특정 리뷰의 좋아요 조회
     const reviewId = Number(this.params.id);
 
@@ -35,6 +35,32 @@ class ReviewLike {
     }
   }
 
+  async getUserReviewLike() {
+    // 특정 유저의 좋아요 조회
+    const userId = Number(this.params.id);
+
+    try {
+      const response = await ReviewLikeStorage.getUserReviewLikeInfo(userId);
+      return { status: 200, data: response[0] };
+    } catch (error) {
+      console.error("오류 메시지:", error.message);
+      console.error("오류 코드:", error.code);
+
+      switch (error.code) {
+        case "ECONNREFUSED":
+          return { status: 503, data: { error: "서버 오류" } };
+        case "ER_PARSE_ERROR":
+          return { status: 500, data: { error: "서버 오류" } };
+        case "ETIMEOUT":
+          return {
+            status: 504,
+            data: { error: "서버 오류" },
+          };
+        default:
+          return { status: 500, data: { error: "서버 오류" } };
+      }
+    }
+  }
   //   async addReviewLike() {
   //     const userId = Number(this.params.id);
   //     const movieId = Number(this.body.movieId);
