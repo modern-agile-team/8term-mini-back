@@ -3,18 +3,17 @@
 const db = require("../config/db");
 
 class CommentStorage {
-  static getCommentInfo(commentId, page, size) {
+  static getCommentInfo(reviewId, page, size) {
     // 댓글 조회
     const offset = (page - 1) * size;
-    const query = "SELECT * FROM comment WHERE comment_id = ? LIMIT ? OFFSET ?";
-    return db.query(query, [commentId, size, offset]);
+    const query = "SELECT * FROM comment WHERE review_id = ? LIMIT ? OFFSET ?";
+    return db.query(query, [reviewId, size, offset]);
   }
 
-  static addCommentInfo(userId, commentId, text) {
+  static addCommentInfo(userId, reviewId, text) {
     // 댓글 추가
-    const query =
-      "INSERT INTO comment (user_id, comment_id, text) VALUES (?, ?, ?)";
-    return db.query(query, [userId, commentId, text]);
+    const query = "INSERT INTO comment (user_id, review_id, text) VALUES (?, ?, ?)";
+    return db.query(query, [userId, reviewId, text]);
   }
 
   static removeCommentInfo(commentId) {
