@@ -13,11 +13,11 @@ const process = {
     const response = await reviewLike.getUserReviewLike();
     return res.json(response);
   },
-  //   addReviewLike: async (req, res) => {
-  //     const reviewLike = new ReviewLike(req);
-  //     const response = await reviewLike.addReviewLike();
-  //     return res.json(response);
-  //   },
+  addReviewLike: async (req, res) => {
+    const reviewLike = new ReviewLike(req);
+    const response = await reviewLike.addReviewLike();
+    return res.json(response);
+  },
   //   removeReviewLike: async (req, res) => {
   //     const reviewLike = new ReviewLike(req);
   //     const response = await reviewLike.removeReviewLike();
