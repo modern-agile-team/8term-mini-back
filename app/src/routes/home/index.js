@@ -35,6 +35,6 @@ router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
 router.get("/reviews/:id/review-likes", reviewLikeCtrl.process.getReviewLike);
 router.get("/users/:id/review-likes", reviewLikeCtrl.process.getUserReviewLike);
 router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
-// router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewLike);
+router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewLike);
 
 module.exports = router;

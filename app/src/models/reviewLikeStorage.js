@@ -23,10 +23,10 @@ class ReviewLikeStorage {
     return db.query(query, [reviewLikeId]);
   }
 
-  //   static removeReviewLikeInfo(id) {
-  //     const query = "DELETE FROM review_like WHERE review_like_id = ?";
-  //     return db.query(query, [id]);
-  //   }
+  static removeReviewLikeInfo(reviewLikeInfo) {
+    const query = "DELETE FROM review_like WHERE review_like_id = ?";
+    return db.query(query, [reviewLikeInfo]);
+  }
 }
 
 module.exports = ReviewLikeStorage;
