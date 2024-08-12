@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const ReviewStorage = require("../models/reviewStorage");
+const ReviewStorage = require('../models/reviewStorage');
 
 class Review {
   constructor(req) {
@@ -20,17 +20,17 @@ class Review {
       return { status: 200, data: response[0] };
     } catch (error) {
       switch (error.code) {
-        case "ECONNREFUSED":
-          return { status: 503, data: { error: "서버 오류" } };
-        case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "서버 오류" } };
-        case "ETIMEOUT":
+        case 'ECONNREFUSED':
+          return { status: 503, data: { error: '서버 오류' } };
+        case 'ER_PARSE_ERROR':
+          return { status: 500, data: { error: '서버 오류' } };
+        case 'ETIMEOUT':
           return {
             status: 504,
-            data: { error: "서버 오류" },
+            data: { error: '서버 오류' },
           };
         default:
-          return { status: 500, data: { error: "서버 오류" } };
+          return { status: 500, data: { error: '서버 오류' } };
       }
     }
   }
@@ -40,30 +40,24 @@ class Review {
     const { userId, movieId, comment } = this.body;
 
     try {
-      const ungetResponse = await ReviewStorage.addReviewInfo(
-        userId,
-        movieId,
-        comment
-      );
+      const ungetResponse = await ReviewStorage.addReviewInfo(userId, movieId, comment);
       if (ungetResponse[0].affectedRows) {
-        const response = await ReviewStorage.getResponse(
-          ungetResponse[0].insertId
-        );
+        const response = await ReviewStorage.getResponse(ungetResponse[0].insertId);
         return { status: 200, data: response[0] };
       }
     } catch (error) {
       switch (error.code) {
-        case "ECONNREFUSED":
-          return { status: 503, data: { error: "서버 오류" } };
-        case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "서버 오류" } };
-        case "ETIMEOUT":
+        case 'ECONNREFUSED':
+          return { status: 503, data: { error: '서버 오류' } };
+        case 'ER_PARSE_ERROR':
+          return { status: 500, data: { error: '서버 오류' } };
+        case 'ETIMEOUT':
           return {
             status: 504,
-            data: { error: "서버 오류" },
+            data: { error: '서버 오류' },
           };
         default:
-          return { status: 500, data: { error: "서버 오류" } };
+          return { status: 500, data: { error: '서버 오류' } };
       }
     }
   }
@@ -79,17 +73,17 @@ class Review {
       }
     } catch (error) {
       switch (error.code) {
-        case "ECONNREFUSED":
-          return { status: 503, data: { error: "서버 오류" } };
-        case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "서버 오류" } };
-        case "ETIMEOUT":
+        case 'ECONNREFUSED':
+          return { status: 503, data: { error: '서버 오류' } };
+        case 'ER_PARSE_ERROR':
+          return { status: 500, data: { error: '서버 오류' } };
+        case 'ETIMEOUT':
           return {
             status: 504,
-            data: { error: "서버 오류" },
+            data: { error: '서버 오류' },
           };
         default:
-          return { status: 500, data: { error: "서버 오류" } };
+          return { status: 500, data: { error: '서버 오류' } };
       }
     }
   }
@@ -100,10 +94,7 @@ class Review {
     const body = this.body;
 
     try {
-      const ungetResponse = await ReviewStorage.updateReviewInfo(
-        params.id,
-        body.comment
-      );
+      const ungetResponse = await ReviewStorage.updateReviewInfo(params.id, body.comment);
 
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(params.id);
@@ -112,17 +103,17 @@ class Review {
       return { status: 200, data: response[0] };
     } catch (error) {
       switch (error.code) {
-        case "ECONNREFUSED":
-          return { status: 503, data: { error: "서버 오류" } };
-        case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "서버 오류" } };
-        case "ETIMEOUT":
+        case 'ECONNREFUSED':
+          return { status: 503, data: { error: '서버 오류' } };
+        case 'ER_PARSE_ERROR':
+          return { status: 500, data: { error: '서버 오류' } };
+        case 'ETIMEOUT':
           return {
             status: 504,
-            data: { error: "서버 오류" },
+            data: { error: '서버 오류' },
           };
         default:
-          return { status: 500, data: { error: "서버 오류" } };
+          return { status: 500, data: { error: '서버 오류' } };
       }
     }
   }
