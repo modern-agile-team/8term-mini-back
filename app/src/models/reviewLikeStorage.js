@@ -9,7 +9,7 @@ class ReviewLikeStorage {
   }
 
   static getUserReviewLikeInfo(userId) {
-    const query = "SELECT * FROM review_like WHERE user_id = ?";
+    const query = "SELECT review_id FROM review_like WHERE user_id = ?";
     return db.query(query, [userId]);
   }
 
