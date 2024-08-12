@@ -6,6 +6,7 @@ class ReviewLike {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
+    this.query = req.query;
   }
 
   async getReviewLike() {
@@ -61,6 +62,7 @@ class ReviewLike {
       }
     }
   }
+
   async addReviewLike() {
     // 좋아요 추가
     const userId = Number(this.params.id);
@@ -98,9 +100,10 @@ class ReviewLike {
 
   async removeReviewLike() {
     // 좋아요 삭제
-    const reviewLikeId = Number(this.params.id);
+    const { userId, reviewId } = this.query;
     try {
-      const check = (await ReviewLikeStorage.removeReviewLikeInfo(reviewLikeId))[0].affectedRows;
+      const check = (await ReviewLikeStorage.removeReviewLikeInfo(userId, reviewId))[0]
+        .affectedRows;
       return check
         ? // 200 -> 204
           { status: 200 }

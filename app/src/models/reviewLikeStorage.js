@@ -23,9 +23,9 @@ class ReviewLikeStorage {
     return db.query(query, [reviewLikeId]);
   }
 
-  static removeReviewLikeInfo(reviewLikeInfo) {
-    const query = "DELETE FROM review_like WHERE review_like_id = ?";
-    return db.query(query, [reviewLikeInfo]);
+  static removeReviewLikeInfo(userId, reviewId) {
+    const query = "DELETE FROM review_like WHERE user_id = ? AND review_id = ?";
+    return db.query(query, [userId, reviewId]);
   }
 }
 
