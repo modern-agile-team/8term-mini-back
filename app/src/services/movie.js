@@ -49,9 +49,9 @@ class Movie {
   }
 
   async getMovie() {
-    const movieId = Number(this.params.id);
+    const { id } = this.params;
     try {
-      const response = await MovieStorage.getMovieInfo(movieId);
+      const response = await MovieStorage.getMovieInfo(id);
       return { status: 200, data: response[0] };
     } catch (error) {
       console.error("오류 메시지:", error.message);
