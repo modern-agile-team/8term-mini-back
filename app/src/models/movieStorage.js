@@ -3,14 +3,19 @@
 const db = require("../config/db");
 
 class MovieStorage {
-  static getMovieInfo(id) {
+  static getMovieInfo(movieId) {
     const query = "SELECT * FROM movie WHERE movie_id = ?";
-    return db.query(query, [id]);
+    return db.query(query, [movieId]);
   }
 
   static getMovieInfos() {
     const query = "SELECT * FROM movie";
     return db.query(query);
+  }
+
+  static getSortMovieInfos(sort) {
+    const query = "SELECT * FROM movie order by ?";
+    return db.query(query, [sort]);
   }
 }
 

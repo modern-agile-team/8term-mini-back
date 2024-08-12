@@ -6,12 +6,22 @@ class Movie {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
+    this.query = req.query;
   }
 
   async getMovie() {
     const movieId = Number(this.params.id);
+    const { sort } = this.query;
+    const orderBy = ["release_date", "title"]; //추후에 상수파일로 빼기
+    const a = ["wishlist", "popularity"];
     let response;
     try {
+      //order by로 정렬하기
+      if (orderBy.includes(sort)) {
+        response = await MovieStorage.getSortMovieInfos(sort);
+      }
+
+      //위시리스트, 인기순으로 정렬하기
       if (movieId) {
         //단일조회
         response = await MovieStorage.getMovieInfo(movieId);
