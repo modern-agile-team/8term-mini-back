@@ -39,6 +39,7 @@ class WishList {
     try {
       const check = await WishListStorage.getWishListInfo(userId, movieId);
       if (!check[0]) {
+        //400 -> 409
         return { status: 400, data: { error: "이미 찜이 생성됨" } };
       }
       const wishListId = (
@@ -73,7 +74,8 @@ class WishList {
       const check = (await WishListStorage.removeWishListInfo(wishListId))[0]
         .affectedRows;
       return check
-        ? { status: 200 }
+        ? // 200 -> 204
+          { status: 200 }
         : { status: 400, data: { error: "지워진 값이 없습니다." } };
     } catch (error) {
       console.error("오류 메시지:", error.message);
