@@ -10,11 +10,10 @@ class ReviewStorage {
     return db.query(query, [movieId, size, offset]);
   }
 
-  static addReviewInfo(userId, movieId, comment) {
+  static addReviewInfo(userId, movieId, text) {
     // 리뷰 추가
-    const query =
-      "INSERT INTO review (user_id, movie_id, comment) VALUES (?, ?, ?)";
-    return db.query(query, [userId, movieId, comment]);
+    const query = "INSERT INTO review (user_id, movie_id, text) VALUES (?, ?, ?)";
+    return db.query(query, [userId, movieId, text]);
   }
 
   static removeReviewInfo(reviewId) {
@@ -23,10 +22,10 @@ class ReviewStorage {
     return db.query(query, [reviewId]);
   }
 
-  static updateReviewInfo(reviewId, comment) {
+  static updateReviewInfo(reviewId, text) {
     // 리뷰 수정
-    const query = "UPDATE review SET comment = ? WHERE review_id = ?";
-    return db.query(query, [comment, reviewId]);
+    const query = "UPDATE review SET text = ? WHERE review_id = ?";
+    return db.query(query, [text, reviewId]);
   }
 
   static getResponse(reviewId) {
