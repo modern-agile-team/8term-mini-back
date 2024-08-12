@@ -11,15 +11,11 @@ class Comment {
 
   async getComment() {
     // 댓글 조회
-    const commentId = this.params.id;
+    const reviewId = this.params.id;
     const page = parseInt(this.query.page, 10) || 1;
     const size = parseInt(this.query.size, 10) || 5;
 
-    const response = await CommentStorage.getCommentInfo(
-      +commentId,
-      page,
-      size
-    );
+    const response = await CommentStorage.getCommentInfo(+reviewId, page, size);
 
     try {
       return { status: 200, data: response[0] };
@@ -42,18 +38,12 @@ class Comment {
 
   async addComment() {
     // 댓글 추가
-    const { userId, commentId, text } = this.body;
+    const { userId, reviewId, text } = this.body;
     try {
-      const ungetResponse = await CommentStorage.addCommentInfo(
-        userId,
-        commentId,
-        text
-      );
+      const ungetResponse = await CommentStorage.addCommentInfo(userId, reviewId, text);
       //0번지로 바꿔놓을것
       if (ungetResponse.affectedRows) {
-        const response = await CommentStorage.getResponse(
-          ungetResponse[0].insertId
-        );
+        const response = await CommentStorage.getResponse(ungetResponse[0].insertId);
         return { status: 200, data: response[0] };
       }
     } catch (error) {
@@ -75,11 +65,11 @@ class Comment {
 
   async removeComment() {
     // 댓글 삭제
-    const params = this.params;
+    const { id } = this.params;
 
     try {
-      const response = await CommentStorage.removeCommentInfo(params.id);
-      if (response.affectedRows) {
+      const response = await CommentStorage.removeCommentInfo(id);
+      if (response[0].affectedRows) {
         return { status: 200 };
       }
     } catch (error) {
@@ -101,16 +91,13 @@ class Comment {
 
   async updateComment() {
     // 댓글 수정
-    const params = this.params;
-    const body = this.body;
+    const { id } = this.params;
+    const { text } = this.body;
 
     try {
-      const ungetResponse = await CommentStorage.updateCommentInfo(
-        params.id,
-        body.text
-      );
+      const ungetResponse = await CommentStorage.updateCommentInfo(id, text);
       if (ungetResponse[0].affectedRows) {
-        const response = await ReviewStorage.getResponse(params.id);
+        const response = await CommentStorage.getResponse(id);
         return { status: 200, data: response[0] };
       }
     } catch (error) {
