@@ -30,4 +30,9 @@ router.get("/users/:id/wish-lists", wishListCtrl.process.getUserWishList);
 router.post("/users/:id/wish-lists", wishListCtrl.process.addWishList);
 router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
 
+// reviewLike 라우팅
+// router.get("/reviews/:id/review-likes", wishListCtrl.process.getUserReviewLike);
+// router.get("/users/:id/review-likes", wishListCtrl.process.addReviewLike);
+// router.delete("/users/my/review-likes/:id", wishListCtrl.process.removeReviewLike);
+
 module.exports = router;
