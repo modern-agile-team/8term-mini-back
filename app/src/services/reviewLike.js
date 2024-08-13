@@ -15,6 +15,7 @@ class ReviewLike {
 
     try {
       const response = await ReviewLikeStorage.getReviewLikeInfo(reviewId);
+      console.log(response);
       return { status: 200, data: response[0] };
     } catch (error) {
       console.error("오류 메시지:", error.message);
