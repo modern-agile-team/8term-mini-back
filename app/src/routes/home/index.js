@@ -11,7 +11,7 @@ const wishListCtrl = require("../wishList/wishList.ctrl");
 const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
 
 // movie 라우팅
-router.get("/movies", movieInfoCtrl.process.getMovie);
+router.get("/movies", movieInfoCtrl.process.getMovies);
 router.get("/movies/:id", movieInfoCtrl.process.getMovie);
 
 // review 라우팅

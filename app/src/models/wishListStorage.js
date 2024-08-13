@@ -23,9 +23,9 @@ class WishListStorage {
     return db.query(query, [userId, movieId]);
   }
 
-  static removeWishListInfo(id) {
+  static removeWishListInfo(wishListId) {
     const query = "DELETE FROM wish_list WHERE wish_list_id = ?";
-    return db.query(query, [id]);
+    return db.query(query, [wishListId]);
   }
 }
 
