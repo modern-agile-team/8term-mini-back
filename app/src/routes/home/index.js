@@ -8,6 +8,7 @@ const movieInfoCtrl = require("../movieInfo/movieInfo.ctrl");
 const reviewInfoCtrl = require("../reviewInfo/reviewInfo.ctrl");
 const commentInfoCtrl = require("../commentInfo/commentInfo.ctrl");
 const wishListCtrl = require("../wishList/wishList.ctrl");
+const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
 
 // movie 라우팅
 router.get("/movies", movieInfoCtrl.process.getMovies);
@@ -29,5 +30,11 @@ router.patch("/users/my/comments/:id", commentInfoCtrl.process.updateComment);
 router.get("/users/:id/wish-lists", wishListCtrl.process.getUserWishList);
 router.post("/users/:id/wish-lists", wishListCtrl.process.addWishList);
 router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
+
+// reviewLike 라우팅
+router.get("/reviews/:id/review-likes", reviewLikeCtrl.process.getReviewLike);
+router.get("/users/:id/review-likes", reviewLikeCtrl.process.getUserReviewLike);
+router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
+router.delete("/users/my/review-likes", reviewLikeCtrl.process.removeReviewLike);
 
 module.exports = router;
