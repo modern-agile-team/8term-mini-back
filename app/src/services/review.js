@@ -16,8 +16,10 @@ class Review {
     const size = parseInt(this.query.size, 10) || 5;
 
     try {
+      const reviewCountResponse = await ReviewStorage.getReviewCount(movieId);
+      const totalCount = reviewCountResponse[0][0].total_count;
       const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
-      return { status: 200, data: response[0] };
+      return { status: 200, totalCount, data: response[0] };
     } catch (error) {
       switch (error.code) {
         case "ECONNREFUSED":
