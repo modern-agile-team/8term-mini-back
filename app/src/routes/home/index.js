@@ -38,6 +38,7 @@ router.get("/users/:id/review-likes", reviewLikeCtrl.process.getUserReviewLike);
 router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
 router.delete("/users/my/review-likes", reviewLikeCtrl.process.removeReviewLike);
 
+// sigUp 라우팅
 router.post("/users", userCtrl.process.signUp);
 
 module.exports = router;
