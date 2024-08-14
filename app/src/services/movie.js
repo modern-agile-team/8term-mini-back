@@ -6,32 +6,69 @@ class Movie {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
+    this.query = req.query;
   }
 
-  async getMovie() {
-    const movieId = Number(this.params.id);
+  async getMovies() {
+    const { sort } = this.query;
     let response;
     try {
-      if (movieId) {
-        //단일조회
-        response = await MovieStorage.getMovieInfo(movieId);
-      } else {
-        //전체조회
-        response = await MovieStorage.getMovieInfos();
+      switch (sort) {
+        case "release_date":
+          response = await MovieStorage.getSortReleaseInfos();
+          break;
+        case "title":
+          response = await MovieStorage.getSortTitleInfos();
+          break;
+        case "popularity":
+          response = await MovieStorage.getSortReviewCountInfos();
+          break;
+        default:
+          response = await MovieStorage.getMovieInfos();
+          break;
       }
       return { status: 200, data: response[0] };
     } catch (error) {
       console.error("오류 메시지:", error.message);
       console.error("오류 코드:", error.code);
 
-      if (error.code === "ECONNREFUSED") {
-        return { status: 503, data: { error: "데이터베이스 연결 오류" } };
-      } else if (error.code === "ER_PARSE_ERROR") {
-        return { status: 500, data: { error: "SQL 구문 오류" } };
-      } else if (error.code === "ETIMEOUT") {
-        return { status: 504, data: { error: "데이터베이스 연결 시간 초과" } };
-      } else {
-        return { status: 500, data: { error: "일반적인 서버 오류" } };
+      switch (error.code) {
+        case "ECONNREFUSED":
+          return { status: 503, data: { error: "서버 오류" } };
+        case "ER_PARSE_ERROR":
+          return { status: 500, data: { error: "서버 오류" } };
+        case "ETIMEOUT":
+          return {
+            status: 504,
+            data: { error: "서버 오류" },
+          };
+        default:
+          return { status: 500, data: { error: "서버 오류" } };
+      }
+    }
+  }
+
+  async getMovie() {
+    const { id } = this.params;
+    try {
+      const response = await MovieStorage.getMovieInfo(id);
+      return { status: 200, data: response[0] };
+    } catch (error) {
+      console.error("오류 메시지:", error.message);
+      console.error("오류 코드:", error.code);
+
+      switch (error.code) {
+        case "ECONNREFUSED":
+          return { status: 503, data: { error: "서버 오류" } };
+        case "ER_PARSE_ERROR":
+          return { status: 500, data: { error: "서버 오류" } };
+        case "ETIMEOUT":
+          return {
+            status: 504,
+            data: { error: "서버 오류" },
+          };
+        default:
+          return { status: 500, data: { error: "서버 오류" } };
       }
     }
   }
