@@ -3,10 +3,22 @@
 //모듈
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 dotenv.config();
 
 const app = express();
 const home = require("./src/routes/home");
+
+const corsOptions = {
+  origin: "*", // 요청을 허용할 도메인
+  credentials: true, // 자격 증명을 허용
+};
+
+//미들웨어
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors(corsOptions));
 
 //앱 세팅
 app.set("views", "./src/views");
