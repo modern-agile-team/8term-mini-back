@@ -42,9 +42,7 @@ class WishList {
         //400 -> 409
         return { status: 400, data: { error: "이미 찜이 생성됨" } };
       }
-      const wishListId = (
-        await WishListStorage.addWishListInfo(userId, movieId)
-      )[0].insertId;
+      const wishListId = (await WishListStorage.addWishListInfo(userId, movieId))[0].insertId;
 
       const response = await WishListStorage.processWishListInfo(wishListId);
       return { status: 200, data: response[0] };
@@ -71,8 +69,7 @@ class WishList {
   async removeWishList() {
     const wishListId = Number(this.params.id);
     try {
-      const check = (await WishListStorage.removeWishListInfo(wishListId))[0]
-        .affectedRows;
+      const check = (await WishListStorage.removeWishListInfo(wishListId))[0].affectedRows;
       return check
         ? // 200 -> 204
           { status: 200 }
