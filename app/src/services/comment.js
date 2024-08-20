@@ -42,7 +42,7 @@ class Comment {
     try {
       const ungetResponse = await CommentStorage.addCommentInfo(userId, reviewId, text);
       //0번지로 바꿔놓을것
-      if (ungetResponse.affectedRows) {
+      if (ungetResponse[0].affectedRows) {
         const response = await CommentStorage.getResponse(ungetResponse[0].insertId);
         return { status: 200, data: response[0] };
       }

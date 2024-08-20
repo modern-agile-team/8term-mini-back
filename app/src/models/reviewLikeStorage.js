@@ -19,7 +19,7 @@ class ReviewLikeStorage {
   }
 
   static processReviewLikeInfo(reviewLikeId) {
-    const query = "SELECT * FROM review_like WHERE review_id = ?";
+    const query = "SELECT * FROM review_like WHERE review_like_id = ?";
     return db.query(query, [reviewLikeId]);
   }
 
