@@ -2,25 +2,67 @@
 
 const bcrypt = require("bcrypt"); //bcrypt라이브러리 이용하여 비밀번호 해싱
 const UserStorage = require("../models/userStorage");
+const { body, validationResult } = require("express-validator");
 
 class UserService {
   constructor(req) {
     this.body = req.body;
+    console.log(this.body);
+  }
+  static validationRules(nickname, id, password, confirmPassword) {
+    //nickname 검증
+    const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/.test(nickname);
+    if (!regex_nickname) {
+      return { status: 400 };
+    }
+    //id 검증
+    const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/.test(id);
+    if (!regex_id) {
+      return { status: 400 };
+    }
+    //password 검증
+    const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/.test(
+      password
+    );
+    if (!regex_password) {
+      return { status: 400 };
+    }
+    //confirmPassword 검증
+    if (password !== confirmPassword) {
+      return { status: 400 };
+    }
+    // 모든 검증을 통과 시 성공 상태 반환
+    return { status: 200 };
   }
 
   async signUp() {
     const userInfo = this.body;
+    console.log(userInfo);
 
-    //비밀번호입력값과 비밀번호 확인 입력값이 다른 경우(오류처리)
-    if (userInfo.password !== userInfo.confirmPassword) {
-      return { success: 400, msg: "입력값 오류" }; //msg 자세히 적으면 안되는지 확인해보기 "password와 confirmpsword입력값이 다릅니다"
+    if (!userInfo) {
+      return {
+        status: 400,
+        message: "이상하다 req.body값이 이상하다",
+      };
     }
-    //비밀번호 해싱
-    const saltRounds = 10; //솔트 라운드 수 (10으로 설정). env에 넣어야 한다.
-    const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds);
 
+    //입력값 검증
+    const validation = UserService.validationRules(
+      userInfo.nickname,
+      userInfo.id,
+      userInfo.password,
+      userInfo.confirmPassword
+    );
+    if (validation.status !== 200) {
+      return validation;
+    }
     //db에 저장
     try {
+      //비밀번호 해싱
+      const saltRounds = 10; //솔트 라운드 수
+      const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds); //try문에 넣기
+
+      //사용자 정보 저장
       const response = await UserStorage.addUserInfo(
         userInfo.nickname,
         userInfo.id,
@@ -28,14 +70,11 @@ class UserService {
       );
       return {
         status: 200,
-        msg: "successfully saved",
         data: response,
       };
     } catch (error) {
       return {
         status: 500,
-        msg: "failed",
-        error: error.msg,
       };
     }
   }

@@ -7,6 +7,14 @@ class UserStorage {
     const query = "INSERT INTO user(nickname, id, password) VALUES(?,?,?);";
     return db.query(query, [nickname, id, password]);
   }
+
+  static getUserInfo(id) {
+    const query = "SELECT * FROM WHERE id = ?;";
+    return db.query(
+      query,
+      [id].then((rows) => rows[0])
+    );
+  }
 }
 
 module.exports = UserStorage;
