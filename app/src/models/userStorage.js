@@ -9,7 +9,7 @@ class UserStorage {
   }
 
   static getUserInfo(id) {
-    const query = "SELECT * FROM WHERE id = ?;";
+    const query = "SELECT * FROM user WHERE id = ?;";
     return db.query(
       query,
       [id].then((rows) => rows[0])

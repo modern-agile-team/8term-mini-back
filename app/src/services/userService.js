@@ -2,7 +2,6 @@
 
 const bcrypt = require("bcrypt"); //bcrypt라이브러리 이용하여 비밀번호 해싱
 const UserStorage = require("../models/userStorage");
-const { body, validationResult } = require("express-validator");
 
 class UserService {
   constructor(req) {
@@ -11,20 +10,18 @@ class UserService {
   }
   static validationRules(nickname, id, password, confirmPassword) {
     //nickname 검증
-    const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/.test(nickname);
-    if (!regex_nickname) {
+    const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+    if (!regex_nickname.test(nickname)) {
       return { status: 400 };
     }
     //id 검증
-    const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/.test(id);
-    if (!regex_id) {
+    const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/;
+    if (!regex_id.test(id)) {
       return { status: 400 };
     }
     //password 검증
-    const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/.test(
-      password
-    );
-    if (!regex_password) {
+    const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+    if (!regex_password.test(password)) {
       return { status: 400 };
     }
     //confirmPassword 검증
@@ -42,7 +39,6 @@ class UserService {
     if (!userInfo) {
       return {
         status: 400,
-        message: "이상하다 req.body값이 이상하다",
       };
     }
 
