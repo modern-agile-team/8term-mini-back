@@ -24,8 +24,19 @@ class MovieStorage {
   }
 
   static getSortReviewCountInfos() {
-    const query =
-      "SELECT * FROM movie LEFT OUTER JOIN (SELECT movie_id, count(*) AS review_count FROM review GROUP BY movie_id) AS review_date ON movie.movie_id = review_date.movie_id ORDER BY review_count DESC";
+    const query = `
+    SELECT 
+      movie.*, 
+      COALESCE(review_date.review_count, 0) AS review_count
+    FROM 
+      movie 
+    LEFT OUTER JOIN 
+      (SELECT movie_id, COUNT(*) AS review_count FROM review GROUP BY movie_id) AS review_date 
+    ON 
+      movie.movie_id = review_date.movie_id 
+    ORDER BY 
+      review_count DESC
+  `;
     return db.query(query);
   }
 }
