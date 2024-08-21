@@ -12,24 +12,24 @@ class UserService {
     //nickname 검증
     const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     if (!regex_nickname.test(nickname)) {
-      return { status: 400, message: "닉네임 입력 오류" };
+      return { status: 400, data: { error: "닉네임 입력 오류" } };
     }
     //id 검증
     const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/;
     if (!regex_id.test(id)) {
-      return { status: 400, message: "아이디 입력 오류" };
+      return { status: 400, data: { error: "아이디 입력 오류" } };
     }
     //password 검증
     const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
     if (!regex_password.test(password)) {
-      return { status: 400, messgae: "비밀번호 입력 오류" };
+      return { status: 400, data: { error: "비밀번호 입력 오류" } };
     }
     //confirmPassword 검증
     if (password !== confirmPassword) {
-      return { status: 400, message: "비밀번호 값 불일치" };
+      return { status: 400, data: { error: "비밀번호 값 불일치" } };
     }
     // 모든 검증을 통과 시 성공 상태 반환
-    return { status: 200, message: "All inputs are valid" };
+    return { status: 200 };
   }
 
   async signUp() {
