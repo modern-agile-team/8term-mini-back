@@ -13,7 +13,7 @@ const process = {
 
   addReview: async (req, res) => {
     // 리뷰 추가
-    const reviewService = new Review(req);
+    const reviewService = new ReviewService(req);
     const response = await reviewService.addReview();
 
     return res.json(response);
@@ -21,7 +21,7 @@ const process = {
 
   removeReview: async (req, res) => {
     // 리뷰 삭제
-    const reviewService = new Review(req);
+    const reviewService = new ReviewService(req);
     const response = await reviewService.removeReview();
 
     return res.json(response);
@@ -29,7 +29,7 @@ const process = {
 
   updateReview: async (req, res) => {
     // 리뷰 수정
-    const reviewService = new Review(req);
+    const reviewService = new ReviewService(req);
     const response = await reviewService.updateReview();
 
     return res.json(response);
