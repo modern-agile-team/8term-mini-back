@@ -1,36 +1,36 @@
 "use strict";
 
-const Review = require("../../services/review");
+const ReviewService = require("../../services/reviewService");
 
 const process = {
   getReview: async (req, res) => {
     // 리뷰 조회
-    const review = new Review(req);
-    const response = await review.getReview();
+    const reviewService = new ReviewService(req);
+    const response = await reviewService.getReview();
 
     return res.json(response);
   },
 
   addReview: async (req, res) => {
     // 리뷰 추가
-    const review = new Review(req);
-    const response = await review.addReview();
+    const reviewService = new ReviewService(req);
+    const response = await reviewService.addReview();
 
     return res.json(response);
   },
 
   removeReview: async (req, res) => {
     // 리뷰 삭제
-    const review = new Review(req);
-    const response = await review.removeReview();
+    const reviewService = new ReviewService(req);
+    const response = await reviewService.removeReview();
 
     return res.json(response);
   },
 
   updateReview: async (req, res) => {
     // 리뷰 수정
-    const review = new Review(req);
-    const response = await review.updateReview();
+    const reviewService = new ReviewService(req);
+    const response = await reviewService.updateReview();
 
     return res.json(response);
   },
