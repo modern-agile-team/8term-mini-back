@@ -1,6 +1,7 @@
 "use strict";
 
 const MovieStorage = require("../models/movieStorage");
+const stringUtils = require("../common/utils/stringUtils");
 
 class MovieService {
   constructor(req) {
@@ -29,7 +30,8 @@ class MovieService {
             : await MovieStorage.getMovieInfos();
           break;
       }
-      return { status: 200, data: response[0] };
+      response = stringUtils.toCamelCase(response[0]);
+      return { status: 200, data: response };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
@@ -39,7 +41,7 @@ class MovieService {
     const { id } = this.params;
     try {
       const response = await MovieStorage.getMovieInfo(id);
-      return { status: 200, data: response[0] };
+      return { status: 200, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }

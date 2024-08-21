@@ -1,6 +1,7 @@
 "use strict";
 
 const WishListStorage = require("../models/wishListStorage");
+const stringUtils = require("../common/utils/stringUtils");
 
 class WishListService {
   constructor(req) {
@@ -12,7 +13,7 @@ class WishListService {
     const userId = Number(this.params.id);
     try {
       const response = await WishListStorage.getUserWishListInfo(userId);
-      return { status: 200, data: response[0] };
+      return { status: 200, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
@@ -24,14 +25,14 @@ class WishListService {
     try {
       const check = await WishListStorage.getWishListInfo(userId, movieId);
       console.log(check);
-      if (check[0]) {
+      if (check[0].length) {
         //400 -> 409
         return { status: 409, data: { error: "이미 찜이 생성됨" } };
       }
       const wishListId = (await WishListStorage.addWishListInfo(userId, movieId))[0].insertId;
 
       const response = await WishListStorage.processWishListInfo(wishListId);
-      return { status: 201, data: response[0] };
+      return { status: 201, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
