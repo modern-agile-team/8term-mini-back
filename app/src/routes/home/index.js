@@ -4,27 +4,27 @@ const express = require("express");
 const router = express.Router();
 
 // 컨트롤러
-const movieInfoCtrl = require("../movieInfo/movieInfo.ctrl");
-const reviewInfoCtrl = require("../reviewInfo/reviewInfo.ctrl");
-const commentInfoCtrl = require("../commentInfo/commentInfo.ctrl");
+const movieCtrl = require("../movie/movie.ctrl");
+const reviewCtrl = require("../review/review.ctrl");
+const commentCtrl = require("../comment/comment.ctrl");
 const wishListCtrl = require("../wishList/wishList.ctrl");
 const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
 
 // movie 라우팅
-router.get("/movies", movieInfoCtrl.process.getMovies);
-router.get("/movies/:id", movieInfoCtrl.process.getMovie);
+router.get("/movies", movieCtrl.process.getMovies);
+router.get("/movies/:id", movieCtrl.process.getMovie);
 
 // review 라우팅
-router.get("/movies/:id/reviews", reviewInfoCtrl.process.getReview);
-router.post("/movies/:id/reviews", reviewInfoCtrl.process.addReview);
-router.delete("/users/my/reviews/:id", reviewInfoCtrl.process.removeReview);
-router.patch("/users/my/reviews/:id", reviewInfoCtrl.process.updateReview);
+router.get("/movies/:id/reviews", reviewCtrl.process.getReview);
+router.post("/movies/:id/reviews", reviewCtrl.process.addReview);
+router.delete("/users/my/reviews/:id", reviewCtrl.process.removeReview);
+router.patch("/users/my/reviews/:id", reviewCtrl.process.updateReview);
 
 // comment 라우팅
-router.get("/reviews/:id/comments", commentInfoCtrl.process.getComment);
-router.post("/reviews/:id/comments", commentInfoCtrl.process.addComment);
-router.delete("/users/my/comments/:id", commentInfoCtrl.process.removeComment);
-router.patch("/users/my/comments/:id", commentInfoCtrl.process.updateComment);
+router.get("/reviews/:id/comments", commentCtrl.process.getComment);
+router.post("/reviews/:id/comments", commentCtrl.process.addComment);
+router.delete("/users/my/comments/:id", commentCtrl.process.removeComment);
+router.patch("/users/my/comments/:id", commentCtrl.process.updateComment);
 
 // wishList 라우팅
 router.get("/users/:id/wish-lists", wishListCtrl.process.getUserWishList);

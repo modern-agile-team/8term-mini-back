@@ -2,7 +2,7 @@
 
 const ReviewStorage = require("../models/reviewStorage");
 
-class Review {
+class ReviewService {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
@@ -121,4 +121,4 @@ class Review {
   }
 }
 
-module.exports = Review;
+module.exports = ReviewService;

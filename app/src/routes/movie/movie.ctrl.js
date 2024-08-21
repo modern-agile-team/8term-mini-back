@@ -1,16 +1,16 @@
 "use strict";
 
-const Movie = require("../../services/movie");
+const MovieService = require("../../services/movieService");
 
 const process = {
   getMovies: async (req, res) => {
-    const movie = new Movie(req);
-    const response = await movie.getMovies();
+    const movieService = new MovieService(req);
+    const response = await movieService.getMovies();
     return res.status(response.status).json(response);
   },
   getMovie: async (req, res) => {
-    const movie = new Movie(req);
-    const response = await movie.getMovie();
+    const movieService = new MovieService(req);
+    const response = await movieService.getMovie();
     return res.status(response.status).json(response);
   },
 };

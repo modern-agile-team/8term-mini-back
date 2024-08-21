@@ -2,7 +2,7 @@
 
 const WishListStorage = require("../models/wishListStorage");
 
-class WishList {
+class WishListService {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
@@ -95,4 +95,4 @@ class WishList {
   }
 }
 
-module.exports = WishList;
+module.exports = WishListService;

@@ -2,7 +2,7 @@
 
 const ReviewLikeStorage = require("../models/reviewLikeStorage");
 
-class ReviewLike {
+class ReviewLikeService {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
@@ -130,4 +130,4 @@ class ReviewLike {
   }
 }
 
-module.exports = ReviewLike;
+module.exports = ReviewLikeService;

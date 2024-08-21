@@ -2,7 +2,7 @@
 
 const CommentStorage = require("../models/commentStorage");
 
-class Comment {
+class CommentService {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
@@ -118,4 +118,4 @@ class Comment {
   }
 }
 
-module.exports = Comment;
+module.exports = CommentService;
