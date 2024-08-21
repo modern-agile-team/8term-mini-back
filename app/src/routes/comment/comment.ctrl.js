@@ -6,33 +6,29 @@ const process = {
   getComment: async (req, res) => {
     // 댓글 조회
     const commentService = new CommentService(req);
-    const response = await commentService.getComment();
-
-    return res.json(response);
+    const { status, data } = await commentService.getComment();
+    return res.status(status).json(data);
   },
 
   addComment: async (req, res) => {
     // 댓글 추가
     const commentService = new CommentService(req);
-    const response = await commentService.addComment();
-
-    return res.json(response);
+    const { status, data } = await commentService.addComment();
+    return res.status(status).json(data);
   },
 
   removeComment: async (req, res) => {
     // 댓글 삭제
     const commentService = new CommentService(req);
-    const response = await commentService.removeComment();
-
-    return res.json(response);
+    const { status, data } = await commentService.removeComment();
+    return res.status(status).json(data);
   },
 
   updateComment: async (req, res) => {
     // 댓글 수정
     const commentService = new CommentService(req);
-    const response = await commentService.updateComment();
-
-    return res.json(response);
+    const { status, data } = await commentService.updateComment();
+    return res.status(status).json(data);
   },
 };
 
