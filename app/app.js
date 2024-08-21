@@ -10,7 +10,7 @@ const app = express();
 const home = require("./src/routes/home");
 
 const corsOptions = {
-  origin: "*", // 요청을 허용할 도메인
+  origin: ["http://localhost:3000", "http://127.0.0.1:3000"], // 요청을 허용할 도메인
   credentials: true, // 자격 증명을 허용
 };
 
