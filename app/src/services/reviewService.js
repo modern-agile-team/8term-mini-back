@@ -19,7 +19,7 @@ class ReviewService {
       const reviewCountResponse = await ReviewStorage.getReviewCount(movieId);
       const totalCount = reviewCountResponse[0][0].total_count;
       const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
-      return { status: 200, totalCount, data: response[0] };
+      return { status: 200, data: { totalCount: totalCount, reveiws: response[0] } };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }

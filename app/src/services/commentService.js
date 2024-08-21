@@ -16,8 +16,10 @@ class CommentService {
     const size = parseInt(this.query.size, 10) || 5;
 
     try {
+      const commentCountResponse = await CommentStorage.getCommentCount(reviewId);
+      const totalCount = commentCountResponse[0][0].total_count;
       const response = await CommentStorage.getCommentInfo(+reviewId, page, size);
-      return { status: 200, data: response[0] };
+      return { status: 200, data: { totalCount: totalCount, comments: response[0] } };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }

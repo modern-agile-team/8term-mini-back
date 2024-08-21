@@ -14,7 +14,7 @@ const process = {
     // 댓글 추가
     const commentService = new CommentService(req);
     const { status, data } = await commentService.addComment();
-    return res.status(status).json(data);
+    return res.json(status, data);
   },
 
   removeComment: async (req, res) => {

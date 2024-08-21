@@ -14,7 +14,6 @@ const process = {
     // 리뷰 추가
     const reviewService = new ReviewService(req);
     const { status, data } = await reviewService.addReview();
-
     return res.status(status).json(data);
   },
 
@@ -22,7 +21,6 @@ const process = {
     // 리뷰 삭제
     const reviewService = new ReviewService(req);
     const { status, data } = await reviewService.removeReview();
-
     return res.status(status).json(data);
   },
 
@@ -30,7 +28,6 @@ const process = {
     // 리뷰 수정
     const reviewService = new ReviewService(req);
     const { status, data } = await reviewService.updateReview();
-
     return res.status(status).json(data);
   },
 };
