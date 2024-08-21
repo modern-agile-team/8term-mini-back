@@ -2,7 +2,7 @@
 
 const MovieStorage = require("../models/movieStorage");
 
-class Movie {
+class MovieService {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
@@ -75,4 +75,4 @@ class Movie {
   }
 }
 
-module.exports = Movie;
+module.exports = MovieService;

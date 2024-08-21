@@ -1,21 +1,17 @@
 "use strict";
 
-const ReviewLikeStorage = require("../models/reviewLikeStorage");
+const WishListStorage = require("../models/wishListStorage");
 
-class ReviewLike {
+class WishListService {
   constructor(req) {
     this.body = req.body;
     this.params = req.params;
-    this.query = req.query;
   }
 
-  async getReviewLike() {
-    // 특정 리뷰의 좋아요 조회
-    const reviewId = Number(this.params.id);
-
+  async getUserWishList() {
+    const userId = Number(this.params.id);
     try {
-      const response = await ReviewLikeStorage.getReviewLikeInfo(reviewId);
-      console.log(response);
+      const response = await WishListStorage.getUserWishListInfo(userId);
       return { status: 200, data: response[0] };
     } catch (error) {
       console.error("오류 메시지:", error.message);
@@ -37,47 +33,18 @@ class ReviewLike {
     }
   }
 
-  async getUserReviewLike() {
-    // 특정 유저의 좋아요 조회
+  async addWishList() {
     const userId = Number(this.params.id);
-
+    const movieId = Number(this.body.movieId);
     try {
-      const response = await ReviewLikeStorage.getUserReviewLikeInfo(userId);
-      return { status: 200, data: response[0] };
-    } catch (error) {
-      console.error("오류 메시지:", error.message);
-      console.error("오류 코드:", error.code);
-
-      switch (error.code) {
-        case "ECONNREFUSED":
-          return { status: 503, data: { error: "서버 오류" } };
-        case "ER_PARSE_ERROR":
-          return { status: 500, data: { error: "서버 오류" } };
-        case "ETIMEOUT":
-          return {
-            status: 504,
-            data: { error: "서버 오류" },
-          };
-        default:
-          return { status: 500, data: { error: "서버 오류" } };
-      }
-    }
-  }
-
-  async addReviewLike() {
-    // 좋아요 추가
-    const userId = Number(this.params.id);
-    const reviewId = Number(this.body.reviewId);
-    try {
-      const check = await ReviewLikeStorage.getReviewLikeInfo(userId, reviewId);
+      const check = await WishListStorage.getWishListInfo(userId, movieId);
       if (!check[0]) {
         //400 -> 409
-        return { status: 400, data: { error: "이미 좋아요 누름" } };
+        return { status: 400, data: { error: "이미 찜이 생성됨" } };
       }
-      const reviewLikeId = (await ReviewLikeStorage.addReviewLikeInfo(userId, reviewId))[0]
-        .insertId;
+      const wishListId = (await WishListStorage.addWishListInfo(userId, movieId))[0].insertId;
 
-      const response = await ReviewLikeStorage.processReviewLikeInfo(reviewLikeId);
+      const response = await WishListStorage.processWishListInfo(wishListId);
       return { status: 200, data: response[0] };
     } catch (error) {
       console.error("오류 메시지:", error.message);
@@ -99,12 +66,10 @@ class ReviewLike {
     }
   }
 
-  async removeReviewLike() {
-    // 좋아요 삭제
-    const { userId, reviewId } = this.query;
+  async removeWishList() {
+    const wishListId = Number(this.params.id);
     try {
-      const check = (await ReviewLikeStorage.removeReviewLikeInfo(userId, reviewId))[0]
-        .affectedRows;
+      const check = (await WishListStorage.removeWishListInfo(wishListId))[0].affectedRows;
       return check
         ? // 200 -> 204
           { status: 200 }
@@ -130,4 +95,4 @@ class ReviewLike {
   }
 }
 
-module.exports = ReviewLike;
+module.exports = WishListService;
