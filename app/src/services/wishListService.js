@@ -19,11 +19,12 @@ class WishListService {
   }
 
   async addWishList() {
-    const userId = Number(this.params.id);
-    const movieId = Number(this.body.movieId);
+    const userId = this.params.id;
+    const movieId = this.body.movieId;
     try {
       const check = await WishListStorage.getWishListInfo(userId, movieId);
-      if (!check[0]) {
+      console.log(check);
+      if (check[0]) {
         //400 -> 409
         return { status: 409, data: { error: "이미 찜이 생성됨" } };
       }
