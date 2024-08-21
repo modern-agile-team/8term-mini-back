@@ -27,7 +27,8 @@ class ReviewService {
 
   async addReview() {
     // 리뷰 추가
-    const { userId, movieId, text } = this.body;
+    const { movieId } = this.params;
+    const { userId, text } = this.body;
 
     try {
       const ungetResponse = await ReviewStorage.addReviewInfo(userId, movieId, text);
