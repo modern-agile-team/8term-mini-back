@@ -10,7 +10,7 @@ class MovieService {
   }
 
   async getMovies() {
-    const { sort } = this.query;
+    const { sort, title } = this.query;
     let response;
     try {
       switch (sort) {
@@ -24,7 +24,9 @@ class MovieService {
           response = await MovieStorage.getSortReviewCountInfos();
           break;
         default:
-          response = await MovieStorage.getMovieInfos();
+          response = title
+            ? await MovieStorage.getMovieSearchInfos(title)
+            : await MovieStorage.getMovieInfos();
           break;
       }
       return { status: 200, data: response[0] };
