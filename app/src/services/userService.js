@@ -38,6 +38,7 @@ class UserService {
     if (!userInfo) {
       return {
         status: 400,
+        message: "입력하지 않았습니다.",
       };
     }
 
