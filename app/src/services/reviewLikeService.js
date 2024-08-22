@@ -40,8 +40,8 @@ class ReviewLikeService {
     const reviewId = Number(this.body.reviewId);
 
     try {
-      const check = await ReviewLikeStorage.getReviewLikeInfo(userId, reviewId);
-      if (check[0]) {
+      const check = await ReviewLikeStorage.getCheckReviewLikeInfo(userId, reviewId);
+      if (check[0].length) {
         return { status: 409, data: { error: "이미 좋아요 누름" } };
       }
       const reviewLikeId = (await ReviewLikeStorage.addReviewLikeInfo(userId, reviewId))[0]

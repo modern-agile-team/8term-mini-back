@@ -27,6 +27,11 @@ class ReviewLikeStorage {
     const query = "DELETE FROM review_like WHERE user_id = ? AND review_id = ?";
     return db.query(query, [userId, reviewId]);
   }
+
+  static getCheckReviewLikeInfo(userId, reviewId) {
+    const query = "SELECT * FROM review_like WHERE user_id = ? and review_id = ?";
+    return db.query(query, [userId, reviewId]);
+  }
 }
 
 module.exports = ReviewLikeStorage;
