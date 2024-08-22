@@ -39,6 +39,11 @@ class MovieStorage {
   `;
     return db.query(query);
   }
+
+  static getMovieSearchInfos(title) {
+    const query = "SELECT * FROM movie WHERE title LIKE ?";
+    return db.query(query, [`%${title}%`]);
+  }
 }
 
 module.exports = MovieStorage;
