@@ -29,6 +29,7 @@ router.patch("/users/my/comments/:id", commentCtrl.process.updateComment);
 
 // wishList 라우팅
 router.get("/users/:id/wish-lists", wishListCtrl.process.getUserWishList);
+router.get("/users/:id/wish-lists/movies", wishListCtrl.process.getWishListMovies);
 router.post("/users/:id/wish-lists", wishListCtrl.process.addWishList);
 router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
 
