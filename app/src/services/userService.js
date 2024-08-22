@@ -2,6 +2,7 @@
 
 const bcrypt = require("bcrypt");
 const UserStorage = require("../models/userStorage");
+const stringUtils = require("../common/utils/stringUtils");
 
 class UserService {
   constructor(req) {
@@ -64,7 +65,7 @@ class UserService {
 
       return {
         status: 200,
-        data: response[0],
+        data: stringUtils.toCamelCase(response[0]),
       };
     } catch (error) {
       console.log(error);
@@ -102,7 +103,7 @@ class UserService {
       //로그인 성공 시 사용자 정보 반환
       return {
         status: 200,
-        data: { message: "로그인 성공", user: userInfo },
+        data: { message: "로그인 성공", user: stringUtils.toCamelCase(userInfo[0]) },
       };
     } catch (error) {
       console.error(error);
