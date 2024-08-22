@@ -8,6 +8,16 @@ class WishListStorage {
     return db.query(query, [userId]);
   }
 
+  static getWishListMoviesInfo(userId) {
+    const query = `
+      SELECT * 
+      FROM wish_list INNER JOIN (SELECT * FROM movie) AS movies
+      ON wish_list.movie_id = movies.movie_id
+      WHERE user_id = ?
+    `;
+    return db.query(query, [userId]);
+  }
+
   static getWishListInfo(userId, movieId) {
     const query = "SELECT * FROM wish_list WHERE user_id = ? and movie_id = ?";
     return db.query(query, [userId, movieId]);
