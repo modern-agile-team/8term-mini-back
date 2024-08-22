@@ -9,6 +9,7 @@ const reviewCtrl = require("../review/review.ctrl");
 const commentCtrl = require("../comment/comment.ctrl");
 const wishListCtrl = require("../wishList/wishList.ctrl");
 const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
+const userCtrl = require("../user/user.ctrl");
 
 // movie 라우팅
 router.get("/movies", movieCtrl.process.getMovies);
@@ -36,5 +37,8 @@ router.get("/reviews/:id/review-likes", reviewLikeCtrl.process.getReviewLike);
 router.get("/users/:id/review-likes", reviewLikeCtrl.process.getUserReviewLike);
 router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
 router.delete("/users/my/review-likes", reviewLikeCtrl.process.removeReviewLike);
+
+// signUp 라우팅
+router.post("/users", userCtrl.process.signUp);
 
 module.exports = router;
