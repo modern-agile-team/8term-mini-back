@@ -6,7 +6,13 @@ class CommentStorage {
   static getCommentInfo(reviewId, page, size) {
     // 댓글 조회
     const offset = (page - 1) * size;
-    const query = "SELECT * FROM comment WHERE review_id = ? LIMIT ? OFFSET ?";
+    const query = `
+    SELECT c.comment_id, c.review_id, c.text, c.date, u.id ,u.nickname
+    FROM comment c
+    JOIN user u ON c.user_id = u.user_id
+    WHERE c.review_id = ?
+    LIMIT ? OFFSET ?;
+  `;
     return db.query(query, [reviewId, size, offset]);
   }
 
@@ -32,6 +38,12 @@ class CommentStorage {
     // 추가된 데이터를 리턴
     const query = "SELECT * FROM comment WHERE comment_id = ?";
     return db.query(query, [commentId]);
+  }
+
+  static getCommentCount(reviewId) {
+    // 특정 리뷰의 댓글 개수 리턴
+    const query = "SELECT COUNT(*) AS total_count FROM comment WHERE review_id = ?";
+    return db.query(query, [reviewId]);
   }
 }
 
