@@ -3,6 +3,7 @@
 const bcrypt = require("bcrypt");
 const UserStorage = require("../models/userStorage");
 const stringUtils = require("../common/utils/stringUtils");
+const jose = require("jose"); //jose라이브러리_jwt(토큰)을 위함
 
 class UserService {
   constructor(req) {
@@ -68,7 +69,6 @@ class UserService {
         data: stringUtils.toCamelCase(response[0]),
       };
     } catch (error) {
-      console.log(error);
       return {
         status: 500,
       };
@@ -100,13 +100,22 @@ class UserService {
         };
       }
 
+      //토큰 생성
+      const jwt = await new jose.SignJWT({
+        user_id: userInfo[0][0].user_id,
+        id: userInfo[0][0].id,
+        nickname: userInfo[0][0].nickname,
+      })
+        .setProtectedHeader({ alg: "HS256" })
+        .setExpirationTime("2h")
+        .sign(new TextEncoder().encode(process.env.JWT_SECRET));
+
       //로그인 성공 시 사용자 정보 반환
       return {
         status: 200,
-        data: { message: "로그인 성공", user: stringUtils.toCamelCase(userInfo[0]) },
+        data: { message: "로그인 성공", token: jwt, user: stringUtils.toCamelCase(userInfo[0]) },
       };
     } catch (error) {
-      console.error(error);
       return { status: 500, data: { error: "서버 오류" } };
     }
   }
