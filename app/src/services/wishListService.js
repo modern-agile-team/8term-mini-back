@@ -10,9 +10,19 @@ class WishListService {
   }
 
   async getUserWishList() {
-    const userId = Number(this.params.id);
+    const userId = this.params.id;
     try {
       const response = await WishListStorage.getUserWishListInfo(userId);
+      return { status: 200, data: stringUtils.toCamelCase(response[0]) };
+    } catch (error) {
+      return { status: 500, data: { error: "서버 오류" } };
+    }
+  }
+
+  async getWishListMovies() {
+    const userId = this.params.id;
+    try {
+      const response = await WishListStorage.getWishListMoviesInfo(userId);
       return { status: 200, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -39,7 +49,7 @@ class WishListService {
   }
 
   async removeWishList() {
-    const wishListId = Number(this.params.id);
+    const wishListId = this.params.id;
     try {
       const check = (await WishListStorage.removeWishListInfo(wishListId))[0].affectedRows;
       return check
