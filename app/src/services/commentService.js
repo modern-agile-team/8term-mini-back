@@ -1,6 +1,7 @@
 "use strict";
 
 const CommentStorage = require("../models/commentStorage");
+const stringUtils = require("../common/utils/stringUtils");
 
 class CommentService {
   constructor(req) {
@@ -19,7 +20,10 @@ class CommentService {
       const commentCountResponse = await CommentStorage.getCommentCount(reviewId);
       const totalCount = commentCountResponse[0][0].total_count;
       const response = await CommentStorage.getCommentInfo(+reviewId, page, size);
-      return { status: 200, data: { totalCount: totalCount, comments: response[0] } };
+      return {
+        status: 200,
+        data: { totalCount: totalCount, comments: stringUtils.toCamelCase(response[0]) },
+      };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
@@ -33,7 +37,7 @@ class CommentService {
       const ungetResponse = await CommentStorage.addCommentInfo(userId, reviewId, text);
       if (ungetResponse[0].affectedRows) {
         const response = await CommentStorage.getResponse(ungetResponse[0].insertId);
-        return { status: 201, data: response[0] };
+        return { status: 201, data: stringUtils.toCamelCase(response[0]) };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -63,7 +67,7 @@ class CommentService {
       const ungetResponse = await CommentStorage.updateCommentInfo(id, text);
       if (ungetResponse[0].affectedRows) {
         const response = await CommentStorage.getResponse(id);
-        return { status: 200, data: response[0] };
+        return { status: 200, data: stringUtils.toCamelCase(response[0]) };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };

@@ -1,6 +1,7 @@
 "use strict";
 
 const ReviewStorage = require("../models/reviewStorage");
+const stringUtils = require("../common/utils/stringUtils");
 
 class ReviewService {
   constructor(req) {
@@ -19,7 +20,10 @@ class ReviewService {
       const reviewCountResponse = await ReviewStorage.getReviewCount(movieId);
       const totalCount = reviewCountResponse[0][0].total_count;
       const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
-      return { status: 200, data: { totalCount: totalCount, reveiws: response[0] } };
+      return {
+        status: 200,
+        data: { totalCount: totalCount, reveiws: stringUtils.toCamelCase(response[0]) },
+      };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
@@ -34,7 +38,7 @@ class ReviewService {
       const ungetResponse = await ReviewStorage.addReviewInfo(userId, movieId, text);
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(ungetResponse[0].insertId);
-        return { status: 201, data: response[0] };
+        return { status: 201, data: stringUtils.toCamelCase(response[0]) };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -64,7 +68,7 @@ class ReviewService {
       const ungetResponse = await ReviewStorage.updateReviewInfo(id, text);
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(id);
-        return { status: 200, data: response[0] };
+        return { status: 200, data: stringUtils.toCamelCase(response[0]) };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };

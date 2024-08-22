@@ -1,6 +1,7 @@
 "use strict";
 
 const ReviewLikeStorage = require("../models/reviewLikeStorage");
+const stringUtils = require("../common/utils/stringUtils");
 
 class ReviewLikeService {
   constructor(req) {
@@ -15,8 +16,7 @@ class ReviewLikeService {
 
     try {
       const response = await ReviewLikeStorage.getReviewLikeInfo(reviewId);
-      console.log(response);
-      return { status: 200, data: response[0] };
+      return { status: 200, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
@@ -28,7 +28,7 @@ class ReviewLikeService {
 
     try {
       const response = await ReviewLikeStorage.getUserReviewLikeInfo(userId);
-      return { status: 200, data: response[0] };
+      return { status: 200, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
@@ -48,7 +48,7 @@ class ReviewLikeService {
         .insertId;
 
       const response = await ReviewLikeStorage.processReviewLikeInfo(reviewLikeId);
-      return { status: 201, data: response[0] };
+      return { status: 201, data: stringUtils.toCamelCase(response[0]) };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
