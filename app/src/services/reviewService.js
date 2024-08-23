@@ -31,7 +31,7 @@ class ReviewService {
 
   async addReview() {
     // 리뷰 추가
-    const { movieId } = this.params;
+    const movieId = this.params.id;
     const { userId, text } = this.body;
 
     try {

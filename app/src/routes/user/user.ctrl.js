@@ -8,5 +8,4 @@ const process = {
     return res.status(status).json(data);
   },
 };
-
 module.exports = { process };

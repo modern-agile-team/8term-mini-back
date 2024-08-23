@@ -56,11 +56,10 @@ class ReviewLikeService {
 
   async removeReviewLike() {
     // 좋아요 삭제
-    const { userId, reviewId } = this.query;
+    const reviewLikeId = this.params.id;
 
     try {
-      const check = (await ReviewLikeStorage.removeReviewLikeInfo(userId, reviewId))[0]
-        .affectedRows;
+      const check = (await ReviewLikeStorage.removeReviewLikeInfo(reviewLikeId))[0].affectedRows;
       return check ? { status: 204 } : { status: 400, data: { error: "지워진 값이 없습니다." } };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
