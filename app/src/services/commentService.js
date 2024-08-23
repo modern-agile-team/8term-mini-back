@@ -12,14 +12,14 @@ class CommentService {
 
   async getComment() {
     // 댓글 조회
-    const reviewId = this.params.id;
+    const { id } = this.params;
     const page = parseInt(this.query.page, 10) || 1;
     const size = parseInt(this.query.size, 10) || 5;
 
     try {
-      const commentCountResponse = await CommentStorage.getCommentCount(reviewId);
+      const commentCountResponse = await CommentStorage.getCommentCount(id);
       const totalCount = commentCountResponse[0][0].total_count;
-      const response = await CommentStorage.getCommentInfo(+reviewId, page, size);
+      const response = await CommentStorage.getCommentInfo(id, page, size);
       return {
         status: 200,
         data: { totalCount: totalCount, comments: stringUtils.toCamelCase(response[0]) },
@@ -31,10 +31,11 @@ class CommentService {
 
   async addComment() {
     // 댓글 추가
-    const { userId, reviewId, text } = this.body;
+    const { id } = this.params;
+    const { userId, text } = this.body;
 
     try {
-      const ungetResponse = await CommentStorage.addCommentInfo(userId, reviewId, text);
+      const ungetResponse = await CommentStorage.addCommentInfo(userId, id, text);
       if (ungetResponse[0].affectedRows) {
         const response = await CommentStorage.getResponse(ungetResponse[0].insertId);
         return { status: 201, data: stringUtils.toCamelCase(response[0]) };

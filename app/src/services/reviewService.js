@@ -12,14 +12,14 @@ class ReviewService {
 
   async getReview() {
     // 리뷰 조회
-    const movieId = this.params.id;
+    const { id } = this.params;
     const page = parseInt(this.query.page, 10) || 1;
     const size = parseInt(this.query.size, 10) || 5;
 
     try {
-      const reviewCountResponse = await ReviewStorage.getReviewCount(movieId);
+      const reviewCountResponse = await ReviewStorage.getReviewCount(id);
       const totalCount = reviewCountResponse[0][0].total_count;
-      const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
+      const response = await ReviewStorage.getReviewInfo(id, page, size);
       return {
         status: 200,
         data: { totalCount: totalCount, reviews: stringUtils.toCamelCase(response[0]) },
@@ -31,11 +31,11 @@ class ReviewService {
 
   async addReview() {
     // 리뷰 추가
-    const movieId = this.params.id;
+    const { id } = this.params;
     const { userId, text } = this.body;
 
     try {
-      const ungetResponse = await ReviewStorage.addReviewInfo(userId, movieId, text);
+      const ungetResponse = await ReviewStorage.addReviewInfo(userId, id, text);
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(ungetResponse[0].insertId);
         return { status: 201, data: stringUtils.toCamelCase(response[0]) };
