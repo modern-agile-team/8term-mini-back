@@ -43,6 +43,6 @@ router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
 router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewLike);
 
 // signUp 라우팅
-router.post("/users", userValidation.process.checkUserAdd, userCtrl.process.signUp);
+router.post("/users", userValidation.checkUserAdd, userCtrl.process.signUp);
 
 module.exports = router;
