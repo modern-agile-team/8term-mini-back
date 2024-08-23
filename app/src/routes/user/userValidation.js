@@ -2,7 +2,7 @@
 
 const { body, validationResult } = require("express-validator");
 
-const checkUserAdd = [
+const checkAddUser = [
   body("nickname")
     .exists()
     .withMessage("nickname 전달 오류")
@@ -10,6 +10,7 @@ const checkUserAdd = [
     .matches(/^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/)
     .withMessage("nickname 입력 오류")
     .bail(),
+
   body("id")
     .exists()
     .withMessage("id 전달 오류")
@@ -17,6 +18,7 @@ const checkUserAdd = [
     .matches(/^(?=.*[a-z0-9])[a-z0-9]{6,16}$/)
     .withMessage("id 입력 오류")
     .bail(),
+
   //   .custom(async (value)=> {
   //     const userService = await UserService.getUserInfo({id: value});
   //     if (serviceClass){
@@ -30,6 +32,7 @@ const checkUserAdd = [
     .matches(/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/)
     .withMessage("password 입력 오류")
     .bail(),
+
   body("confirmPassword")
     .exists()
     .withMessage("confirmPassword 전달 오류")
@@ -52,4 +55,4 @@ const checkUserAdd = [
   },
 ];
 
-module.exports = { checkUserAdd };
+module.exports = { checkAddUser };
