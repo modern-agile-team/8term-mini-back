@@ -57,14 +57,12 @@ class UserService {
       //비밀번호 해싱
       const saltRounds = parseInt(process.env.SALT_ROUND); //솔트 라운드 수
       const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds);
-      console.log(hashedPassword);
       //사용자 정보 저장
       const userId = (
         await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword)
       )[0].insertId;
 
       const response = await UserStorage.getUserIdInfo(userId);
-      console.log(response);
 
       return {
         status: 200,

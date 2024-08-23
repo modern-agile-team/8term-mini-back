@@ -11,6 +11,9 @@ const wishListCtrl = require("../wishList/wishList.ctrl");
 const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
 const userCtrl = require("../user/user.ctrl");
 
+// validation 컨트롤러
+const userValidation = require("../user/userValidation");
+
 // movie 라우팅
 router.get("/movies", movieCtrl.process.getMovies);
 router.get("/movies/:id", movieCtrl.process.getMovie);
@@ -40,6 +43,6 @@ router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
 router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewLike);
 
 // signUp 라우팅
-router.post("/users", userCtrl.process.signUp);
+router.post("/users", userValidation.process.checkUserAdd, userCtrl.process.signUp);
 
 module.exports = router;
