@@ -22,7 +22,7 @@ class ReviewService {
       const response = await ReviewStorage.getReviewInfo(+movieId, page, size);
       return {
         status: 200,
-        data: { totalCount: totalCount, reveiws: stringUtils.toCamelCase(response[0]) },
+        data: { totalCount: totalCount, reviews: stringUtils.toCamelCase(response[0]) },
       };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -31,7 +31,7 @@ class ReviewService {
 
   async addReview() {
     // 리뷰 추가
-    const { movieId } = this.params;
+    const movieId = this.params.id;
     const { userId, text } = this.body;
 
     try {
