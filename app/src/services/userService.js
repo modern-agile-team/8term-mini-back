@@ -107,10 +107,9 @@ class UserService {
         .setExpirationTime("2h")
         .sign(new TextEncoder().encode(process.env.JWT_SECRET));
 
-      //로그인 성공 시 사용자 정보 반환
       return {
         status: 200,
-        data: { message: "로그인 성공", token: jwt, user: stringUtils.toCamelCase(userInfo[0]) },
+        data: { message: "로그인 성공", token: jwt },
       };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
