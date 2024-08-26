@@ -3,7 +3,13 @@
 const { body, param, validationResult } = require("express-validator");
 
 const checkGetReview = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -16,8 +22,22 @@ const checkGetReview = [
 ];
 
 const checkAddReview = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
-  body("userId").exists().withMessage("userId 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
+
+  body("userId")
+    .exists()
+    .withMessage("userId 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("userId 입력 오류")
+    .bail(),
+
   body("text")
     .exists()
     .withMessage("text 전달 오류")
@@ -37,7 +57,14 @@ const checkAddReview = [
 ];
 
 const checkUpdateReview = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
+
   body("text")
     .exists()
     .withMessage("text 전달 오류")
@@ -57,7 +84,13 @@ const checkUpdateReview = [
 ];
 
 const checkDeleteReview = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
 
   (req, res, next) => {
     const errors = validationResult(req);

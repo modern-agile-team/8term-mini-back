@@ -3,7 +3,13 @@
 const { body, param, validationResult } = require("express-validator");
 
 const checkGetComment = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -16,8 +22,22 @@ const checkGetComment = [
 ];
 
 const checkAddComment = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
-  body("userId").exists().withMessage("userId 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
+
+  body("userId")
+    .exists()
+    .withMessage("userId 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("userId 입력 오류")
+    .bail(),
+
   body("text")
     .exists()
     .withMessage("text 전달 오류")
@@ -37,7 +57,14 @@ const checkAddComment = [
 ];
 
 const checkUpdateComment = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
+
   body("text")
     .exists()
     .withMessage("text 전달 오류")
@@ -57,7 +84,13 @@ const checkUpdateComment = [
 ];
 
 const checkDeleteComment = [
-  param("id").exists().withMessage("id 전달 오류").bail(),
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
 
   (req, res, next) => {
     const errors = validationResult(req);

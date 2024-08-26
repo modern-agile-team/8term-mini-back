@@ -48,6 +48,7 @@ const checkAddReviewLike = [
     .isInt()
     .withMessage("id 입력 오류")
     .bail(),
+
   body("reviewId")
     .exists()
     .withMessage("reviewId 전달 오류")
