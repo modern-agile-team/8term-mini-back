@@ -37,10 +37,11 @@ router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
 router.get("/reviews/:id/review-likes", reviewLikeCtrl.process.getReviewLike);
 router.get("/users/:id/review-likes", reviewLikeCtrl.process.getUserReviewLike);
 router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
-router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewLike);
+router.delete("/users/my/review-likes", reviewLikeCtrl.process.removeReviewLike);
 
-// signUp 라우팅
+// user 라우팅
 router.post("/users", userCtrl.process.signUp);
 router.post("/users/login", userCtrl.process.login);
+router.get("/users/check-id", userCtrl.process.checkId);
 
 module.exports = router;
