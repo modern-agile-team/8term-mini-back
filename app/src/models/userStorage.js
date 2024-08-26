@@ -4,8 +4,8 @@ const db = require("../config/db");
 
 class UserStorage {
   static addUserInfo(nickname, id, password) {
-    const query = "INSERT INTO user(nickname, id, password) VALUES(?,?,?);";
-    return db.query(query, [nickname, id, password]);
+    const query = "INSERT INTO user(nickname, id, password, profile) VALUES(?,?,?,?);";
+    return db.query(query, [nickname, id, password, profile]);
   }
 
   static getUserIdInfo(userId) {
