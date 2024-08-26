@@ -19,12 +19,6 @@ const checkAddUser = [
     .withMessage("id 입력 오류")
     .bail(),
 
-  //   .custom(async (value)=> {
-  //     const userService = await UserService.getUserInfo({id: value});
-  //     if (serviceClass){
-  //         throw new Error('id 중복 오류')
-  //     }
-  //   }),
   body("password")
     .exists()
     .withMessage("password 전달 오류")
