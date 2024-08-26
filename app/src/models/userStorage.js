@@ -15,10 +15,7 @@ class UserStorage {
 
   static getUserInfo(id) {
     const query = "SELECT * FROM user WHERE id = ?;";
-    return db.query(
-      query,
-      [id].then((rows) => rows[0]) //async await으로!!!
-    );
+    return db.query(query, [id]);
   }
 }
 

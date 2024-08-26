@@ -29,6 +29,7 @@ router.patch("/users/my/comments/:id", commentCtrl.process.updateComment);
 
 // wishList 라우팅
 router.get("/users/:id/wish-lists", wishListCtrl.process.getUserWishList);
+router.get("/users/:id/wish-lists/movies", wishListCtrl.process.getWishListMovies);
 router.post("/users/:id/wish-lists", wishListCtrl.process.addWishList);
 router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
 
@@ -36,9 +37,10 @@ router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
 router.get("/reviews/:id/review-likes", reviewLikeCtrl.process.getReviewLike);
 router.get("/users/:id/review-likes", reviewLikeCtrl.process.getUserReviewLike);
 router.post("/users/:id/review-likes", reviewLikeCtrl.process.addReviewLike);
-router.delete("/users/my/review-likes", reviewLikeCtrl.process.removeReviewLike);
+router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewLike);
 
 // signUp 라우팅
 router.post("/users", userCtrl.process.signUp);
+router.post("/users/login", userCtrl.process.login);
 
 module.exports = router;
