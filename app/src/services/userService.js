@@ -115,6 +115,34 @@ class UserService {
       return { status: 500, data: { error: "서버 오류" } };
     }
   }
+
+  async checkId() {
+    const { id } = this.query; //query 파라미터에서 아이디 가져오기
+    if (!id) {
+      return {
+        status: 400,
+        data: { error: "아이디를 입력하세요" },
+      };
+    }
+    try {
+      const userExists = await UserStorage.getUserInfo(id);
+      if (userExists[0].length) {
+        return {
+          status: 409,
+          data: { message: "이미 사용중인 아이디입니다." },
+        };
+      }
+      return {
+        status: 200,
+        data: { message: "사용 가능한 아이디입니다." },
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        data: { error: "서버 오류" },
+      };
+    }
+  }
 }
 
 module.exports = UserService;
