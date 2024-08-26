@@ -8,6 +8,7 @@ const jose = require("jose"); //jose라이브러리_jwt(토큰)을 위함
 class UserService {
   constructor(req) {
     this.body = req.body;
+    this.query = req.query;
   }
   static userInputValidation(nickname, id, password, confirmPassword) {
     //nickname 검증
@@ -117,7 +118,7 @@ class UserService {
   }
 
   async checkId() {
-    const { id } = this.query; //query 파라미터에서 아이디 가져오기
+    const { id } = this.query;
     if (!id) {
       return {
         status: 400,
