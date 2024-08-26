@@ -15,7 +15,7 @@ const userCtrl = require("../user/user.ctrl");
 // const movieValidation = require("../movie/movieValidation");
 const reviewValidation = require("../review/reviewValidation");
 const commentValidation = require("../comment/commentValidation");
-// const wishListValidation = require("../wishList/wishListValidation");
+const wishListValidation = require("../wishList/wishListValidation");
 const reviewLikeValidation = require("../reviewLike/reviewLikeValidation");
 const userValidation = require("../user/userValidation");
 
@@ -60,10 +60,26 @@ router.patch(
 );
 
 // wishList 라우팅
-router.get("/users/:id/wish-lists", wishListCtrl.process.getUserWishList);
-router.get("/users/:id/wish-lists/movies", wishListCtrl.process.getWishListMovies);
-router.post("/users/:id/wish-lists", wishListCtrl.process.addWishList);
-router.delete("/users/my/wish-lists/:id", wishListCtrl.process.removeWishList);
+router.get(
+  "/users/:id/wish-lists",
+  wishListValidation.checkGetWishList,
+  wishListCtrl.process.getUserWishList
+);
+router.get(
+  "/users/:id/wish-lists/movies",
+  wishListValidation.checkGetWishListMovies,
+  wishListCtrl.process.getWishListMovies
+);
+router.post(
+  "/users/:id/wish-lists",
+  wishListValidation.checkAddWishList,
+  wishListCtrl.process.addWishList
+);
+router.delete(
+  "/users/my/wish-lists/:id",
+  wishListValidation.checkDeleteWishList,
+  wishListCtrl.process.removeWishList
+);
 
 // reviewLike 라우팅
 router.get(
