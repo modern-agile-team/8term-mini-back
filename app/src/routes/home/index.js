@@ -41,5 +41,6 @@ router.delete("/users/my/review-likes/:id", reviewLikeCtrl.process.removeReviewL
 
 // signUp 라우팅
 router.post("/users", userCtrl.process.signUp);
+router.post("/users/login", userCtrl.process.login);
 
 module.exports = router;
