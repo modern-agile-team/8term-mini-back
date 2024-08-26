@@ -12,7 +12,7 @@ const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
 const userCtrl = require("../user/user.ctrl");
 
 // validation 컨트롤러
-// const movieValidation = require("../movie/movieValidation");
+const movieValidation = require("../movie/movieValidation");
 const reviewValidation = require("../review/reviewValidation");
 const commentValidation = require("../comment/commentValidation");
 const wishListValidation = require("../wishList/wishListValidation");
@@ -20,8 +20,8 @@ const reviewLikeValidation = require("../reviewLike/reviewLikeValidation");
 const userValidation = require("../user/userValidation");
 
 // movie 라우팅
-router.get("/movies", movieCtrl.process.getMovies);
-router.get("/movies/:id", movieCtrl.process.getMovie);
+router.get("/movies", movieValidation.checkGetMovies, movieCtrl.process.getMovies);
+router.get("/movies/:id", movieValidation.checkGetMovie, movieCtrl.process.getMovie);
 
 // review 라우팅
 router.get("/movies/:id/reviews", reviewValidation.checkGetReview, reviewCtrl.process.getReview);
