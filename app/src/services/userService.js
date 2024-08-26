@@ -62,11 +62,8 @@ class UserService {
         await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword)
       )[0].insertId;
 
-      const response = await UserStorage.getUserIdInfo(userId);
-
       return {
         status: 200,
-        data: stringUtils.toCamelCase(response[0]),
       };
     } catch (error) {
       return {
