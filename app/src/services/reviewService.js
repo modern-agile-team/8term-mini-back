@@ -12,14 +12,14 @@ class ReviewService {
 
   async getReview() {
     // 리뷰 조회
-    const { id } = this.params;
+    const movieId = this.params.id;
     const page = parseInt(this.query.page, 10) || 1;
     const size = parseInt(this.query.size, 10) || 5;
 
     try {
-      const reviewCountResponse = await ReviewStorage.getReviewCount(id);
+      const reviewCountResponse = await ReviewStorage.getReviewCount(movieId);
       const totalCount = reviewCountResponse[0][0].total_count;
-      const response = await ReviewStorage.getReviewInfo(id, page, size);
+      const response = await ReviewStorage.getReviewInfo(movieId, page, size);
       return {
         status: 200,
         data: { totalCount: totalCount, reviews: stringUtils.toCamelCase(response[0]) },
@@ -31,11 +31,11 @@ class ReviewService {
 
   async addReview() {
     // 리뷰 추가
-    const { id } = this.params;
+    const movieId = this.params.id;
     const { userId, text } = this.body;
 
     try {
-      const ungetResponse = await ReviewStorage.addReviewInfo(userId, id, text);
+      const ungetResponse = await ReviewStorage.addReviewInfo(userId, movieId, text);
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(ungetResponse[0].insertId);
         return { status: 201, data: stringUtils.toCamelCase(response[0]) };
@@ -47,10 +47,10 @@ class ReviewService {
 
   async removeReview() {
     // 리뷰 삭제
-    const { id } = this.params;
+    const reviewId = this.params.id;
 
     try {
-      const response = await ReviewStorage.removeReviewInfo(id);
+      const response = await ReviewStorage.removeReviewInfo(reviewId);
       if (response[0].affectedRows) {
         return { status: 204 };
       }
@@ -61,13 +61,13 @@ class ReviewService {
 
   async updateReview() {
     // 리뷰 수정
-    const { id } = this.params;
+    const reviewId = this.params.id;
     const { text } = this.body;
 
     try {
-      const ungetResponse = await ReviewStorage.updateReviewInfo(id, text);
+      const ungetResponse = await ReviewStorage.updateReviewInfo(reviewId, text);
       if (ungetResponse[0].affectedRows) {
-        const response = await ReviewStorage.getResponse(id);
+        const response = await ReviewStorage.getResponse(reviewId);
         return { status: 200, data: stringUtils.toCamelCase(response[0]) };
       }
     } catch (error) {
