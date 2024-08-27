@@ -63,7 +63,7 @@ class UserService {
       )[0].insertId;
 
       return {
-        status: 200,
+        status: 201,
       };
     } catch (error) {
       return {
