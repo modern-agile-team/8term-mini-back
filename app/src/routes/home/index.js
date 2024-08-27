@@ -12,12 +12,12 @@ const reviewLikeCtrl = require("../reviewLike/reviewLike.ctrl");
 const userCtrl = require("../user/user.ctrl");
 
 // validation 컨트롤러
-const movieValidation = require("../movie/movieValidation");
-const reviewValidation = require("../review/reviewValidation");
-const commentValidation = require("../comment/commentValidation");
-const wishListValidation = require("../wishList/wishListValidation");
-const reviewLikeValidation = require("../reviewLike/reviewLikeValidation");
-const userValidation = require("../user/userValidation");
+const movieValidation = require("../validation/movieValidation");
+const reviewValidation = require("../validation/reviewValidation");
+const commentValidation = require("../validation/commentValidation");
+const wishListValidation = require("../validation/wishListValidation");
+const reviewLikeValidation = require("../validation/reviewLikeValidation");
+const userValidation = require("../validation/userValidation");
 
 // movie 라우팅
 router.get("/movies", movieValidation.checkGetMovies, movieCtrl.process.getMovies);
