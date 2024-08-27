@@ -39,6 +39,8 @@ class ReviewService {
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(ungetResponse[0].insertId);
         return { status: 201, data: stringUtils.toCamelCase(response[0]) };
+      } else {
+        return { status: 404, data: "해당 리뷰를 찾을 수 없습니다." };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -48,11 +50,14 @@ class ReviewService {
   async removeReview() {
     // 리뷰 삭제
     const reviewId = this.params.id;
+    console.log(reviewId);
 
     try {
       const response = await ReviewStorage.removeReviewInfo(reviewId);
       if (response[0].affectedRows) {
         return { status: 204 };
+      } else {
+        return { status: 404, data: "해당 리뷰를 찾을 수 없습니다." };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -69,6 +74,8 @@ class ReviewService {
       if (ungetResponse[0].affectedRows) {
         const response = await ReviewStorage.getResponse(reviewId);
         return { status: 200, data: stringUtils.toCamelCase(response[0]) };
+      } else {
+        return { status: 404, data: "해당 리뷰를 찾을 수 없습니다." };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
