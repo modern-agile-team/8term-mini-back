@@ -125,5 +125,6 @@ router.delete(
 router.post("/users", userCtrl.process.signUp);
 router.post("/users/login", userCtrl.process.login);
 router.get("/users/check-id", userCtrl.process.checkId);
+router.put("/users/:user_id", userCtrl.process.updateUser);
 
 module.exports = router;

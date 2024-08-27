@@ -17,6 +17,11 @@ class UserStorage {
     const query = "SELECT * FROM user WHERE id = ?;";
     return db.query(query, [id]);
   }
+
+  static updateUserInfo(userId, nickname, password, profile) {
+    const query = "UPDATE user SET nickname = ?, password = ?, profile = ? WHERE user_id = ?;";
+    return db.query(query, [nickname, password, profile, userId]);
+  }
 }
 
 module.exports = UserStorage;
