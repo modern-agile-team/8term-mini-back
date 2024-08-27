@@ -103,9 +103,9 @@ router.delete(
   reviewLikeCtrl.process.removeReviewLike
 );
 
-// signUp 라우팅
-
-router.post("/users/login", userValidation.checkUser, userCtrl.process.login);
-router.post("/users", userValidation.checkAddUser, userCtrl.process.signUp);
+// user 라우팅
+router.post("/users", userCtrl.process.signUp);
+router.post("/users/login", userCtrl.process.login);
+router.get("/users/check-id", userCtrl.process.checkId);
 
 module.exports = router;
