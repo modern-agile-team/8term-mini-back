@@ -175,7 +175,7 @@ class UserService {
 
     if (!userId) {
       return {
-        status: 400,
+        status: 404,
         data: { error: "user_id가 필요합니다." },
       };
     }
@@ -185,6 +185,11 @@ class UserService {
     }
 
     try {
+      const userExists = await UserStorage.getUserIdInfo(userId);
+      if (userExists[0].length === 0) {
+        return { status: 404, data: { error: "존재하지 않는 userId 입니다." } };
+      }
+
       const hashedPassword = await UserService.hashPassword(password);
       await UserStorage.updateUserInfo(userId, nickname, hashedPassword, profile);
       return { status: 200 };
