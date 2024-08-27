@@ -187,7 +187,7 @@ class UserService {
     try {
       const hashedPassword = await UserService.hashPassword(password);
       await UserStorage.updateUserInfo(userId, nickname, hashedPassword, profile);
-      return { status: 200, data: { message: "유저 정보 수정 완료" } };
+      return { status: 200 };
     } catch (error) {
       return { status: 500, data: { error: "서버오류" } };
     }
