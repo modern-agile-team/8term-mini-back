@@ -12,5 +12,11 @@ const process = {
     const { status, data } = await userService.login();
     return res.status(status).json(data);
   },
+  checkId: async (req, res) => {
+    const userService = new UserService(req);
+    const { status, data } = await userService.checkId();
+    return res.status(status).json(data);
+  },
 };
+
 module.exports = { process };

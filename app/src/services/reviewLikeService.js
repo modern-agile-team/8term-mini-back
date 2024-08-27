@@ -12,7 +12,7 @@ class ReviewLikeService {
 
   async getReviewLike() {
     // 특정 리뷰의 좋아요 조회
-    const reviewId = Number(this.params.id);
+    const reviewId = this.params.id;
 
     try {
       const response = await ReviewLikeStorage.getReviewLikeInfo(reviewId);
@@ -24,7 +24,7 @@ class ReviewLikeService {
 
   async getUserReviewLike() {
     // 특정 유저의 좋아요 조회
-    const userId = Number(this.params.id);
+    const userId = this.params.id;
 
     try {
       const response = await ReviewLikeStorage.getUserReviewLikeInfo(userId);
@@ -36,8 +36,8 @@ class ReviewLikeService {
 
   async addReviewLike() {
     // 좋아요 추가
-    const userId = Number(this.params.id);
-    const reviewId = Number(this.body.reviewId);
+    const userId = this.params.id;
+    const reviewId = this.body.reviewId;
 
     try {
       const check = await ReviewLikeStorage.getCheckReviewLikeInfo(userId, reviewId);

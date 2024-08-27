@@ -38,9 +38,9 @@ class MovieService {
   }
 
   async getMovie() {
-    const { id } = this.params;
+    const movieId = this.params.id;
     try {
-      const response = await MovieStorage.getMovieInfo(id);
+      const response = await MovieStorage.getMovieInfo(movieId);
       return { status: 200, data: stringUtils.toCamelCase(response[0])[0] };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };

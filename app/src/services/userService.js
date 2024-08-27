@@ -8,6 +8,7 @@ const jose = require("jose"); //jose라이브러리_jwt(토큰)을 위함
 class UserService {
   constructor(req) {
     this.body = req.body;
+    this.query = req.query;
   }
   static userInputValidation(nickname, id, password, confirmPassword) {
     //nickname 검증
@@ -59,11 +60,11 @@ class UserService {
       const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds);
       //사용자 정보 저장
       const userId = (
-        await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword)
+        await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword, "1.png")
       )[0].insertId;
 
       return {
-        status: 200,
+        status: 201,
       };
     } catch (error) {
       return {
@@ -113,6 +114,34 @@ class UserService {
       };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
+    }
+  }
+
+  async checkId() {
+    const { id } = this.query;
+    if (!id) {
+      return {
+        status: 400,
+        data: { error: "아이디를 입력하세요" },
+      };
+    }
+    try {
+      const userExists = await UserStorage.getUserInfo(id);
+      if (userExists[0].length) {
+        return {
+          status: 409,
+          data: { message: "이미 사용중인 아이디입니다." },
+        };
+      }
+      return {
+        status: 200,
+        data: { message: "사용 가능한 아이디입니다." },
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        data: { error: "서버 오류" },
+      };
     }
   }
 }

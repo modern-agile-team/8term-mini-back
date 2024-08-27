@@ -19,7 +19,7 @@ class CommentService {
     try {
       const commentCountResponse = await CommentStorage.getCommentCount(reviewId);
       const totalCount = commentCountResponse[0][0].total_count;
-      const response = await CommentStorage.getCommentInfo(+reviewId, page, size);
+      const response = await CommentStorage.getCommentInfo(reviewId, page, size);
       return {
         status: 200,
         data: { totalCount: totalCount, comments: stringUtils.toCamelCase(response[0]) },
@@ -31,7 +31,8 @@ class CommentService {
 
   async addComment() {
     // 댓글 추가
-    const { userId, reviewId, text } = this.body;
+    const reviewId = this.params.id;
+    const { userId, text } = this.body;
 
     try {
       const ungetResponse = await CommentStorage.addCommentInfo(userId, reviewId, text);
@@ -46,10 +47,10 @@ class CommentService {
 
   async removeComment() {
     // 댓글 삭제
-    const { id } = this.params;
+    const commentId = this.params.id;
 
     try {
-      const response = await CommentStorage.removeCommentInfo(id);
+      const response = await CommentStorage.removeCommentInfo(commentId);
       if (response[0].affectedRows) {
         return { status: 204 };
       }
@@ -60,13 +61,13 @@ class CommentService {
 
   async updateComment() {
     // 댓글 수정
-    const { id } = this.params;
+    const commentId = this.params.id;
     const { text } = this.body;
 
     try {
-      const ungetResponse = await CommentStorage.updateCommentInfo(id, text);
+      const ungetResponse = await CommentStorage.updateCommentInfo(commentId, text);
       if (ungetResponse[0].affectedRows) {
-        const response = await CommentStorage.getResponse(id);
+        const response = await CommentStorage.getResponse(commentId);
         return { status: 200, data: stringUtils.toCamelCase(response[0]) };
       }
     } catch (error) {

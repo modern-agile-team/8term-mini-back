@@ -34,9 +34,7 @@ class WishListService {
     const movieId = this.body.movieId;
     try {
       const check = await WishListStorage.getWishListInfo(userId, movieId);
-      console.log(check);
       if (check[0].length) {
-        //400 -> 409
         return { status: 409, data: { error: "이미 찜이 생성됨" } };
       }
       const wishListId = (await WishListStorage.addWishListInfo(userId, movieId))[0].insertId;
@@ -52,10 +50,7 @@ class WishListService {
     const wishListId = this.params.id;
     try {
       const check = (await WishListStorage.removeWishListInfo(wishListId))[0].affectedRows;
-      return check
-        ? // 200 -> 204
-          { status: 204 }
-        : { status: 400, data: { error: "지워진 값이 없습니다." } };
+      return check ? { status: 204 } : { status: 400, data: { error: "지워진 값이 없습니다." } };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
