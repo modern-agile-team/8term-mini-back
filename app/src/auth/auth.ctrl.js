@@ -2,14 +2,14 @@
 
 const Auth = require("./authService");
 
-const process = {
-  accessToken: async (req, res) => {
+const check = {
+  accessToken: async (req, res, next) => {
     const auth = new Auth(req);
     const { status, data } = await auth.accessToken();
-    return res.status(status).json(data);
+    return status === 200 ? next() : res.status(status).json(data);
   },
 };
 
 module.exports = {
-  process,
+  check,
 };
