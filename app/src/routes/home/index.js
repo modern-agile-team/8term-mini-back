@@ -105,7 +105,7 @@ router.delete(
 
 // signUp 라우팅
 
-router.post("/users/login", userCtrl.process.login);
+router.post("/users/login", userValidation.checkUser, userCtrl.process.login);
 router.post("/users", userValidation.checkAddUser, userCtrl.process.signUp);
 
 module.exports = router;
