@@ -197,6 +197,25 @@ class UserService {
       return { status: 500, data: { error: "서버오류" } };
     }
   }
+  async getUserInfo() {
+    const userId = this.params.user_id;
+
+    if (!userId) {
+      return {
+        status: 400,
+        data: { error: "user_id가 필요합니다." },
+      };
+    }
+    try {
+      const userInfo = await UserStorage.getUserIdInfo(userId);
+      if (userInfo[0].length === 0) {
+        return { status: 404, data: { error: "존재하지 않는 userId 입니다." } };
+      }
+      return { status: 200, data: userInfo[0][0] };
+    } catch (error) {
+      return { status: 500, data: { error: "서버 오류" } };
+    }
+  }
 }
 
 module.exports = UserService;

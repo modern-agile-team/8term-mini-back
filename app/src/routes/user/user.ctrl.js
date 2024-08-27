@@ -24,7 +24,7 @@ const process = {
   },
   getUserInfo: async (req, res) => {
     const userService = new UserService(req);
-    const { status, data } = await userService.getUSerInfo();
+    const { status, data } = await userService.getUserInfo();
     return res.status(status).json(data);
   },
 };
