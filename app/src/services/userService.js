@@ -3,14 +3,20 @@
 const bcrypt = require("bcrypt");
 const UserStorage = require("../models/userStorage");
 const stringUtils = require("../common/utils/stringUtils");
-const jose = require("jose"); //jose라이브러리_jwt(토큰)을 위함
+const jose = require("jose");
 
 class UserService {
   constructor(req) {
     this.body = req.body;
     this.query = req.query;
+    this.params = req.params;
   }
-  static userInputValidation(nickname, id, password, confirmPassword) {
+  static async hashPassword(password) {
+    const saltRounds = parseInt(process.env.SALT_ROUND);
+    return await bcrypt.hash(password, saltRounds);
+  }
+
+  static userSignUpValidation(nickname, id, password, confirmPassword) {
     //nickname 검증
     const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     if (!regex_nickname.test(nickname)) {
@@ -20,6 +26,25 @@ class UserService {
     const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/;
     if (!regex_id.test(id)) {
       return { status: 400, data: { error: "아이디 입력 오류" } };
+    }
+    //password 검증
+    const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+    if (!regex_password.test(password)) {
+      return { status: 400, data: { error: "비밀번호 입력 오류" } };
+    }
+    //confirmPassword 검증
+    if (password !== confirmPassword) {
+      return { status: 400, data: { error: "비밀번호 값 불일치" } };
+    }
+    // 모든 검증을 통과 시 성공 상태 반환
+    return { status: 200 };
+  }
+
+  static userUpdateValidation(nickname, password, confirmPassword) {
+    //nickname 검증
+    const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+    if (!regex_nickname.test(nickname)) {
+      return { status: 400, data: { error: "닉네임 입력 오류" } };
     }
     //password 검증
     const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
@@ -44,20 +69,20 @@ class UserService {
     }
 
     //입력값 검증
-    const UserInputValidation = UserService.userInputValidation(
+    const UserSignUpValidation = UserService.userSignUpValidation(
       userInfo.nickname,
       userInfo.id,
       userInfo.password,
       userInfo.confirmPassword
     );
-    if (UserInputValidation.status !== 200) {
-      return UserInputValidation;
+    if (UserSignUpValidation.status !== 200) {
+      return UserSignUpValidation;
     }
+
     //db에 저장
     try {
       //비밀번호 해싱
-      const saltRounds = parseInt(process.env.SALT_ROUND); //솔트 라운드 수
-      const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds);
+      const hashedPassword = await UserService.hashPassword(userInfo.password);
       //사용자 정보 저장
       const userId = (
         await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword, "1.png")
@@ -142,6 +167,34 @@ class UserService {
         status: 500,
         data: { error: "서버 오류" },
       };
+    }
+  }
+  async updateUser() {
+    const userId = this.params.user_id;
+    const { nickname, password, confirmPassword, profile } = this.body;
+
+    if (!userId) {
+      return {
+        status: 400,
+        data: { error: "user_id가 필요합니다." },
+      };
+    }
+    const validation = UserService.userUpdateValidation(nickname, password, confirmPassword);
+    if (validation.status !== 200) {
+      return validation;
+    }
+
+    try {
+      const userExists = await UserStorage.getUserIdInfo(userId);
+      if (userExists[0].length === 0) {
+        return { status: 404, data: { error: "존재하지 않는 userId 입니다." } };
+      }
+
+      const hashedPassword = await UserService.hashPassword(password);
+      await UserStorage.updateUserInfo(userId, nickname, hashedPassword, profile);
+      return { status: 204 };
+    } catch (error) {
+      return { status: 500, data: { error: "서버오류" } };
     }
   }
 }
