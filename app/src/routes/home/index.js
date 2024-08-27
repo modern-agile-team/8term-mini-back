@@ -126,5 +126,6 @@ router.post("/users", userCtrl.process.signUp);
 router.post("/users/login", userCtrl.process.login);
 router.get("/users/check-id", userCtrl.process.checkId);
 router.put("/users/:user_id", userCtrl.process.updateUser);
+router.get("/users/:id", userCtrl.process.getUserInfo);
 
 module.exports = router;

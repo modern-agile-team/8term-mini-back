@@ -22,6 +22,11 @@ const process = {
     const { status, data } = await userService.updateUser();
     return res.status(status).json(data);
   },
+  getUserInfo: async (req, res) => {
+    const userService = new UserService(req);
+    const { status, data } = await userService.getUSerInfo();
+    return res.status(status).json(data);
+  },
 };
 
 module.exports = { process };
