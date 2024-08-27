@@ -59,11 +59,11 @@ class UserService {
       const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds);
       //사용자 정보 저장
       const userId = (
-        await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword)
+        await UserStorage.addUserInfo(userInfo.nickname, userInfo.id, hashedPassword, "1.png")
       )[0].insertId;
 
       return {
-        status: 200,
+        status: 201,
       };
     } catch (error) {
       return {
