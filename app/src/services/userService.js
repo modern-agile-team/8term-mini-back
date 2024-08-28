@@ -16,48 +16,48 @@ class UserService {
     return await bcrypt.hash(password, saltRounds);
   }
 
-  static userSignUpValidation(nickname, id, password, confirmPassword) {
-    //nickname 검증
-    const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
-    if (!regex_nickname.test(nickname)) {
-      return { status: 400, data: { error: "닉네임 입력 오류" } };
-    }
-    //id 검증
-    const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/;
-    if (!regex_id.test(id)) {
-      return { status: 400, data: { error: "아이디 입력 오류" } };
-    }
-    //password 검증
-    const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
-    if (!regex_password.test(password)) {
-      return { status: 400, data: { error: "비밀번호 입력 오류" } };
-    }
-    //confirmPassword 검증
-    if (password !== confirmPassword) {
-      return { status: 400, data: { error: "비밀번호 값 불일치" } };
-    }
-    // 모든 검증을 통과 시 성공 상태 반환
-    return { status: 200 };
-  }
+  // static userSignUpValidation(nickname, id, password, confirmPassword) {
+  //   //nickname 검증
+  //   const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+  //   if (!regex_nickname.test(nickname)) {
+  //     return { status: 400, data: { error: "닉네임 입력 오류" } };
+  //   }
+  //   //id 검증
+  //   const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/;
+  //   if (!regex_id.test(id)) {
+  //     return { status: 400, data: { error: "아이디 입력 오류" } };
+  //   }
+  //   //password 검증
+  //   const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+  //   if (!regex_password.test(password)) {
+  //     return { status: 400, data: { error: "비밀번호 입력 오류" } };
+  //   }
+  //   //confirmPassword 검증
+  //   if (password !== confirmPassword) {
+  //     return { status: 400, data: { error: "비밀번호 값 불일치" } };
+  //   }
+  //   // 모든 검증을 통과 시 성공 상태 반환
+  //   return { status: 200 };
+  // }
 
-  static userUpdateValidation(nickname, password, confirmPassword) {
-    //nickname 검증
-    const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
-    if (!regex_nickname.test(nickname)) {
-      return { status: 400, data: { error: "닉네임 입력 오류" } };
-    }
-    //password 검증
-    const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
-    if (!regex_password.test(password)) {
-      return { status: 400, data: { error: "비밀번호 입력 오류" } };
-    }
-    //confirmPassword 검증
-    if (password !== confirmPassword) {
-      return { status: 400, data: { error: "비밀번호 값 불일치" } };
-    }
-    // 모든 검증을 통과 시 성공 상태 반환
-    return { status: 200 };
-  }
+  // static userUpdateValidation(nickname, password, confirmPassword) {
+  //   //nickname 검증
+  //   const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+  //   if (!regex_nickname.test(nickname)) {
+  //     return { status: 400, data: { error: "닉네임 입력 오류" } };
+  //   }
+  //   //password 검증
+  //   const regex_password = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+  //   if (!regex_password.test(password)) {
+  //     return { status: 400, data: { error: "비밀번호 입력 오류" } };
+  //   }
+  //   //confirmPassword 검증
+  //   if (password !== confirmPassword) {
+  //     return { status: 400, data: { error: "비밀번호 값 불일치" } };
+  //   }
+  //   // 모든 검증을 통과 시 성공 상태 반환
+  //   return { status: 200 };
+  // }
 
   async signUp() {
     const userInfo = this.body;
@@ -68,17 +68,23 @@ class UserService {
       };
     }
 
-    //입력값 검증
-    const UserSignUpValidation = UserService.userSignUpValidation(
-      userInfo.nickname,
-      userInfo.id,
-      userInfo.password,
-      userInfo.confirmPassword
-    );
-    if (UserSignUpValidation.status !== 200) {
-      return UserSignUpValidation;
-    }
+    // //입력값 검증
+    // const UserSignUpValidation = UserService.userSignUpValidation(
+    //   userInfo.nickname,
+    //   userInfo.id,
+    //   userInfo.password,
+    //   userInfo.confirmPassword
+    // );
+    // if (UserSignUpValidation.status !== 200) {
+    //   return UserSignUpValidation;
+    // }
 
+    // const checkIdResult = await this.checkId(userInfo.id);
+    // if (checkIdResult.status != 200) {
+    //   return checkIdResult;
+    // }
+
+    // console.log(userInfo.id);
     //db에 저장
     try {
       //비밀번호 해싱
@@ -179,10 +185,10 @@ class UserService {
         data: { error: "user_id가 필요합니다." },
       };
     }
-    const validation = UserService.userUpdateValidation(nickname, password, confirmPassword);
-    if (validation.status !== 200) {
-      return validation;
-    }
+    // const validation = UserService.userUpdateValidation(nickname, password, confirmPassword);
+    // if (validation.status !== 200) {
+    //   return validation;
+    // }
 
     try {
       const userExists = await UserStorage.getUserIdInfo(userId);
