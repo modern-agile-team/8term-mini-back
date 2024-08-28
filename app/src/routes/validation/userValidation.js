@@ -1,6 +1,6 @@
 "use strict";
 
-const { body, param, validationResult } = require("express-validator");
+const { body, param, query, validationResult } = require("express-validator");
 
 const checkAddUser = [
   body("nickname")
@@ -66,7 +66,7 @@ const checkUser = [
 ];
 
 const checkUserId = [
-  body("id").exists().withMessage("id 전달 오류").bail(),
+  query("id").exists().withMessage("id 전달 오류").bail(),
 
   (req, res, next) => {
     const errors = validationResult(req);
