@@ -115,6 +115,14 @@ const checkUpdateUser = [
       return true;
     }),
 
+  body("profile")
+    .exists()
+    .withMessage("profile 전달 오류")
+    .bail()
+    .matches("/^profileimg[1-8].png$/")
+    .withMessage("profile 입력 오류")
+    .bail(),
+
   (req, res, next) => {
     const errors = validationResult(req);
 
