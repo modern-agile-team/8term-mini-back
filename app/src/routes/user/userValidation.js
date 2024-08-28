@@ -65,4 +65,18 @@ const checkUser = [
   },
 ];
 
+const checkDupliate = [
+  query("id").exists().withMessage("id 전달 오류").bail(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (errors.isEmpty()) {
+      return next();
+    }
+
+    return res.status(400).json({ data: errors.array()[0].msg });
+  },
+];
+
 module.exports = { checkAddUser, checkUser };

@@ -83,8 +83,6 @@ class UserService {
     // if (checkIdResult.status != 200) {
     //   return checkIdResult;
     // }
-
-    // console.log(userInfo.id);
     //db에 저장
     try {
       //비밀번호 해싱
@@ -189,7 +187,6 @@ class UserService {
     // if (validation.status !== 200) {
     //   return validation;
     // }
-
     try {
       const userExists = await UserStorage.getUserIdInfo(userId);
       if (userExists[0].length === 0) {
