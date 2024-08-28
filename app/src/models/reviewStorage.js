@@ -14,14 +14,15 @@ class ReviewStorage {
             COALESCE(COUNT(DISTINCT rl.review_like_id), 0) AS like_count,
             COALESCE(COUNT(DISTINCT c.comment_id), 0) AS comment_count,
             u.id AS id,
-            u.nickname
+            u.nickname,
+            u.profile
         FROM review r
         LEFT JOIN review_like rl ON r.review_id = rl.review_id
         LEFT JOIN comment c ON r.review_id = c.review_id
         LEFT JOIN user u ON r.user_id = u.user_id
         WHERE r.movie_id = ?
         GROUP BY
-            r.review_id, r.text, r.date, u.id, u.nickname
+            r.review_id, r.text, r.date, u.id, u.nickname, u.profile
         ORDER BY
             r.date DESC
         LIMIT ? OFFSET ?;
