@@ -9,7 +9,6 @@ class Auth {
   async accessToken() {
     try {
       const authHeader = this.headers.authorization;
-      console.log(req);
       if (!authHeader) {
         return { status: 401, data: { error: "Authorization header가 없습니다." } };
       }
