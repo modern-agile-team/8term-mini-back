@@ -39,6 +39,8 @@ class CommentService {
       if (ungetResponse[0].affectedRows) {
         const response = await CommentStorage.getResponse(ungetResponse[0].insertId);
         return { status: 201, data: stringUtils.toCamelCase(response[0]) };
+      } else {
+        return { status: 404, data: "해당 댓글을 찾을 수 없습니다." };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -53,6 +55,8 @@ class CommentService {
       const response = await CommentStorage.removeCommentInfo(commentId);
       if (response[0].affectedRows) {
         return { status: 204 };
+      } else {
+        return { status: 404, data: "해당 댓글을 찾을 수 없습니다." };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
@@ -69,6 +73,8 @@ class CommentService {
       if (ungetResponse[0].affectedRows) {
         const response = await CommentStorage.getResponse(commentId);
         return { status: 200, data: stringUtils.toCamelCase(response[0]) };
+      } else {
+        return { status: 404, data: "해당 댓글을 찾을 수 없습니다." };
       }
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };

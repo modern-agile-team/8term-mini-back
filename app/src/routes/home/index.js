@@ -13,12 +13,12 @@ const userCtrl = require("../user/user.ctrl");
 const authCtrl = require("../../auth/auth.ctrl");
 
 // validation 컨트롤러
-const movieValidation = require("../movie/movieValidation");
-const reviewValidation = require("../review/reviewValidation");
-const commentValidation = require("../comment/commentValidation");
-const wishListValidation = require("../wishList/wishListValidation");
-const reviewLikeValidation = require("../reviewLike/reviewLikeValidation");
-const userValidation = require("../user/userValidation");
+const movieValidation = require("../validation/movieValidation");
+const reviewValidation = require("../validation/reviewValidation");
+const commentValidation = require("../validation/commentValidation");
+const wishListValidation = require("../validation/wishListValidation");
+const reviewLikeValidation = require("../validation/reviewLikeValidation");
+const userValidation = require("../validation/userValidation");
 
 // movie 라우팅
 router.get("/movies", movieValidation.checkGetMovies, movieCtrl.process.getMovies);
@@ -124,17 +124,17 @@ router.delete(
 // user 라우팅
 router.post("/users", userValidation.checkAddUser, userCtrl.process.signUp); //회원가입 : 유효성검사
 router.post("/users/login", userValidation.checkUser, userCtrl.process.login); //로그인 : 유효성검사
-router.get("/users/check-id", userCtrl.process.checkId);
+router.get("/users/check-id", userValidation.checkUserId, userCtrl.process.checkId);
 router.put(
   "/users/:user_id",
   authCtrl.check.accessToken,
-  userValidation.checkUser,
+  userValidation.checkUpdateUser,
   userCtrl.process.updateUser
 ); //수정 : 인증, 유효성검사
 router.get(
   "/users/:user_id",
   authCtrl.check.accessToken,
-  userValidation.checkUser,
+  userValidation.checkKeyUserId,
   userCtrl.process.getUserInfo
 ); //조회 : 인증, 유효성검사
 

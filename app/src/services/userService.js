@@ -164,7 +164,8 @@ class UserService {
       if (userInfo[0].length === 0) {
         return { status: 404, data: { error: "존재하지 않는 userId 입니다." } };
       }
-      return { status: 200, data: userInfo[0][0] };
+      const { password, ...others } = userInfo[0][0];
+      return { status: 200, data: others };
     } catch (error) {
       return { status: 500, data: { error: "서버 오류" } };
     }
