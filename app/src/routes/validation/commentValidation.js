@@ -42,7 +42,7 @@ const checkAddComment = [
     .exists()
     .withMessage("text 전달 오류")
     .bail()
-    .matches(/^(?=.*[^\s])[a-z0-9가-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{1,50}$/)
+    .matches(/^(?=.*[^\s])[a-z0-9가-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?\s]{1,50}$/)
     .withMessage("text 입력 오류")
     .bail(),
 
@@ -69,7 +69,7 @@ const checkUpdateComment = [
     .exists()
     .withMessage("text 전달 오류")
     .bail()
-    .matches(/^(?=.*[^\s])[a-z0-9가-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{1,50}$/)
+    .matches(/^(?=.*[^\s])[a-z0-9가-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?\s]{1,50}$/)
     .withMessage("text 입력 오류")
     .bail(),
 
