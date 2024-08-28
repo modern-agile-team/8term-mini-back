@@ -18,7 +18,7 @@ const checkGetMovie = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -41,7 +41,7 @@ const checkGetMovies = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 

@@ -17,7 +17,7 @@ const checkGetReviewLike = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -36,7 +36,7 @@ const checkGetUserReviewLike = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -63,7 +63,7 @@ const checkAddReviewLike = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -82,7 +82,7 @@ const checkDeleteReviewLike = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 

@@ -17,7 +17,7 @@ const checkGetReview = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -52,7 +52,7 @@ const checkAddReview = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -79,7 +79,7 @@ const checkUpdateReview = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -98,7 +98,7 @@ const checkDeleteReview = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 

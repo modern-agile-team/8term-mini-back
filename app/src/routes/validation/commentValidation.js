@@ -17,7 +17,7 @@ const checkGetComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -52,7 +52,7 @@ const checkAddComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -79,7 +79,7 @@ const checkUpdateComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -98,7 +98,7 @@ const checkDeleteComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
