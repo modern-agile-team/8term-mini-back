@@ -124,7 +124,7 @@ router.delete(
 // user 라우팅
 router.post("/users", userValidation.checkAddUser, userCtrl.process.signUp); //회원가입 : 유효성검사
 router.post("/users/login", userValidation.checkUser, userCtrl.process.login); //로그인 : 유효성검사
-router.get("/users/check-id", userValidation.checkUser, userCtrl.process.checkId); //중복검사(회원가입 일부) : 유효성 검사
+router.get("/users/check-id", userValidation.checkDupliate, userCtrl.process.checkId); //중복검사(회원가입 일부) : 유효성 검사
 router.put(
   "/users/:user_id",
   authCtrl.check.accessToken,

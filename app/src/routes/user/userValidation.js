@@ -79,4 +79,4 @@ const checkDupliate = [
   },
 ];
 
-module.exports = { checkAddUser, checkUser };
+module.exports = { checkAddUser, checkUser, checkDupliate };
