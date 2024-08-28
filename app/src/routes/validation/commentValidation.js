@@ -17,7 +17,7 @@ const checkGetComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -42,7 +42,7 @@ const checkAddComment = [
     .exists()
     .withMessage("text 전달 오류")
     .bail()
-    .matches(/^(?=.*[^\s])[a-z0-9가-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{1,50}$/)
+    .matches(/^(?=.*[^\s])[a-z0-9ㄱ-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?\s]{1,50}$/)
     .withMessage("text 입력 오류")
     .bail(),
 
@@ -52,7 +52,7 @@ const checkAddComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -69,7 +69,7 @@ const checkUpdateComment = [
     .exists()
     .withMessage("text 전달 오류")
     .bail()
-    .matches(/^(?=.*[^\s])[a-z0-9가-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{1,50}$/)
+    .matches(/^(?=.*[^\s])[a-z0-9ㄱ-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?\s]{1,50}$/)
     .withMessage("text 입력 오류")
     .bail(),
 
@@ -79,7 +79,7 @@ const checkUpdateComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
@@ -98,7 +98,7 @@ const checkDeleteComment = [
     if (errors.isEmpty()) {
       return next();
     }
-    return res.status(400).json({ data: errors.array()[0].msg });
+    return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];
 
