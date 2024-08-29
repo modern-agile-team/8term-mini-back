@@ -35,7 +35,7 @@ class UserStorage {
       values.push(profile);
     }
 
-    query = query.slice(0, -2); // 마지막의 ', ' 제거
+    query = query.slice(0, -2);
     query += " WHERE user_id = ?;";
     values.push(userId);
 

@@ -159,7 +159,7 @@ class UserService {
       }
       await UserStorage.updateUserInfo(userId, updatedNickname, updatedPassword, updatedProfile);
 
-      const newToken = await this.generationToken(userId);
+      const newToken = await this.generateToken(userId);
 
       return {
         status: 200,
@@ -172,7 +172,7 @@ class UserService {
     }
   }
 
-  async generationToken(userId) {
+  async generateToken(userId) {
     const userInfo = await UserStorage.getUserIdInfo(userId);
     const user = userInfo[0][0];
     const jwt = await new jose.SignJWT({
