@@ -26,7 +26,6 @@ class UserService {
 
     try {
       const checkIdResult = await this.checkId(userInfo.id);
-      console.log(checkIdResult);
       if (checkIdResult.status != 200) {
         return checkIdResult;
       }

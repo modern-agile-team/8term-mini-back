@@ -23,7 +23,6 @@ class Auth {
 
       return { status: 200 };
     } catch (err) {
-      console.error(err);
       return { status: 403, data: { error: "유효하지 않거나 만료된 토큰입니다." } };
     }
   }
