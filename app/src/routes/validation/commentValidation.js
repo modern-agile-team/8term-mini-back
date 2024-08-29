@@ -69,7 +69,7 @@ const checkUpdateComment = [
     .exists()
     .withMessage("text 전달 오류")
     .bail()
-    .matches(/^(?=.*[^\s])[a-z0-9ㄱ-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?\s]{1,50}$/)
+    .matches(/^(?=.*[^\s])[a-zA-Z0-9ㄱ-힣!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?\s]{1,50}$/)
     .withMessage("text 입력 오류")
     .bail(),
 
