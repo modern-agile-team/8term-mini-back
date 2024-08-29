@@ -18,6 +18,7 @@ app.use(
       "http://localhost:3000",
       "http://127.0.0.1:3000",
       "https://mordern-movie.netlify.app/",
+      "http://52.79.219.0",
     ],
     credentials: true,
   })
