@@ -80,9 +80,9 @@ const checkUserId = [
 ];
 
 const checkKeyUserId = [
-  param("user_id")
+  param("id")
     .exists()
-    .withMessage("user_id 전달 오류")
+    .withMessage("id 전달 오류")
     .bail()
     .isInt()
     .withMessage("id 입력 오류")
@@ -100,9 +100,9 @@ const checkKeyUserId = [
 ];
 
 const checkUpdateUser = [
-  param("user_id")
+  param("id")
     .exists()
-    .withMessage("user_id 전달 오류")
+    .withMessage("id 전달 오류")
     .bail()
     .isInt()
     .withMessage("id 입력 오류")

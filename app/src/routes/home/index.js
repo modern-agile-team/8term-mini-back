@@ -126,13 +126,13 @@ router.post("/users", userValidation.checkAddUser, userCtrl.process.signUp); //�
 router.post("/users/login", userValidation.checkUser, userCtrl.process.login); //로그인 : 유효성검사
 router.get("/users/check-id", userValidation.checkUserId, userCtrl.process.checkId);
 router.put(
-  "/users/:user_id",
+  "/users/:id",
   authCtrl.check.accessToken,
   userValidation.checkUpdateUser,
   userCtrl.process.updateUser
 ); //수정 : 인증, 유효성검사
 router.get(
-  "/users/:user_id",
+  "/users/:id",
   authCtrl.check.accessToken,
   userValidation.checkKeyUserId,
   userCtrl.process.getUserInfo

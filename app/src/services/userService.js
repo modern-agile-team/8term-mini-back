@@ -127,7 +127,7 @@ class UserService {
     }
   }
   async updateUser() {
-    const userId = this.params.user_id;
+    const userId = this.params.id;
     const { nickname, password, confirmPassword, profile } = this.body;
 
     if (!userId) {
@@ -151,7 +151,7 @@ class UserService {
     }
   }
   async getUserInfo() {
-    const userId = this.params.user_id;
+    const userId = this.params.id;
 
     if (!userId) {
       return {
