@@ -128,7 +128,7 @@ class UserService {
   }
   async updateUser() {
     const userId = this.params.id;
-    const { nickname, password, confirmPassword, profile } = this.body;
+    const { nickname, password, profile } = this.body;
 
     if (!userId) {
       return {
@@ -143,8 +143,22 @@ class UserService {
         return { status: 404, data: { error: "존재하지 않는 userId 입니다." } };
       }
 
-      const hashedPassword = await UserService.hashPassword(password);
-      await UserStorage.updateUserInfo(userId, nickname, hashedPassword, profile);
+      const existingUserInfo = userExists[0][0];
+
+      const updatedNickname = nickname || existingUserInfo.nickname;
+      const updatedProfile = profile || existingUserInfo.profile;
+      let updatedPassword = existingUserInfo.password; // 기본적으로 기존 비밀번호 유지
+      if (password) {
+        if (password !== confirmPassword) {
+          return {
+            status: 400,
+            data: { error: "비밀번호 입력값과 일치하지 않습니다." },
+          };
+        }
+        // 비밀번호 해싱
+        updatedPassword = await UserService.hashPassword(password);
+      }
+      await UserStorage.updateUserInfo(userId, updatedNickname, updatedPassword, updatedProfile);
       return { status: 204 };
     } catch (error) {
       return { status: 500, data: { error: "서버오류" } };
