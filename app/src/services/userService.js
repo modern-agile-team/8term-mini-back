@@ -158,11 +158,36 @@ class UserService {
         updatedPassword = await UserService.hashPassword(password);
       }
       await UserStorage.updateUserInfo(userId, updatedNickname, updatedPassword, updatedProfile);
-      return { status: 204 };
+
+      const newToken = await this.generationToken(userId);
+
+      return {
+        status: 200,
+        data: {
+          token: newToken,
+        },
+      };
     } catch (error) {
       return { status: 500, data: { error: "서버오류" } };
     }
   }
+
+  async generationToken(userId) {
+    const userInfo = await UserStorage.getUserIdInfo(userId);
+    const user = userInfo[0][0];
+    const jwt = await new jose.SignJWT({
+      user_id: user.user_id,
+      id: user.id,
+      nickname: user.nickname,
+      profile: user.profile,
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("2h")
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET));
+
+    return jwt;
+  }
+
   async getUserInfo() {
     const userId = this.params.id;
 
