@@ -109,47 +109,37 @@ const checkUpdateUser = [
     .bail(),
 
   body("nickname")
-    .exists()
-    .withMessage("nickname 전달 오류")
-    .bail()
+    .optional()
     .matches(/^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/)
     .withMessage("nickname 입력 오류")
     .bail(),
 
   body("password")
-    .exists()
-    .withMessage("password 전달 오류")
-    .bail()
+    .optional()
     .matches(/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/)
     .withMessage("password 입력 오류")
     .bail(),
 
   body("confirmPassword")
-    .exists()
-    .withMessage("confirmPassword 전달 오류")
-    .bail()
+    .optional()
     .custom((value, { req }) => {
-      if (value !== req.body.password) {
+      if (req.body.password && value !== req.body.password) {
         throw new Error("confirmPassword 입력 오류");
       }
       return true;
     }),
 
   body("profile")
-    .exists()
-    .withMessage("profile 전달 오류")
-    .bail()
+    .optional()
     .matches(/^profileimg[1-8]\.png$/)
     .withMessage("profile 입력 오류")
     .bail(),
 
   (req, res, next) => {
     const errors = validationResult(req);
-
     if (errors.isEmpty()) {
       return next();
     }
-
     return res.status(400).json({ error: errors.array()[0].msg });
   },
 ];

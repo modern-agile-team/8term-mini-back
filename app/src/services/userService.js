@@ -26,7 +26,6 @@ class UserService {
 
     try {
       const checkIdResult = await this.checkId(userInfo.id);
-      console.log(checkIdResult);
       if (checkIdResult.status != 200) {
         return checkIdResult;
       }
@@ -143,13 +142,51 @@ class UserService {
         return { status: 404, data: { error: "존재하지 않는 userId 입니다." } };
       }
 
-      const hashedPassword = await UserService.hashPassword(password);
-      await UserStorage.updateUserInfo(userId, nickname, hashedPassword, profile);
-      return { status: 204 };
+      const existingUserInfo = userExists[0][0];
+      const updatedNickname = nickname || existingUserInfo.nickname;
+      const updatedProfile = profile || existingUserInfo.profile;
+      let updatedPassword = existingUserInfo.password; // 기본적으로 기존 비밀번호 유지
+
+      if (password) {
+        if (password !== confirmPassword) {
+          return {
+            status: 400,
+            data: { error: "비밀번호 입력값과 일치하지 않습니다." },
+          };
+        }
+        updatedPassword = await UserService.hashPassword(password);
+      }
+      await UserStorage.updateUserInfo(userId, updatedNickname, updatedPassword, updatedProfile);
+
+      const newToken = await this.generateToken(userId);
+
+      return {
+        status: 200,
+        data: {
+          token: newToken,
+        },
+      };
     } catch (error) {
       return { status: 500, data: { error: "서버오류" } };
     }
   }
+
+  async generateToken(userId) {
+    const userInfo = await UserStorage.getUserIdInfo(userId);
+    const user = userInfo[0][0];
+    const jwt = await new jose.SignJWT({
+      user_id: user.user_id,
+      id: user.id,
+      nickname: user.nickname,
+      profile: user.profile,
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("2h")
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET));
+
+    return jwt;
+  }
+
   async getUserInfo() {
     const userId = this.params.id;
 
