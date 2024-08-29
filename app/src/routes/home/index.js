@@ -122,9 +122,20 @@ router.delete(
 );
 
 // user 라우팅
-router.post("/users", userCtrl.process.signUp);
-router.post("/users/login", userCtrl.process.login);
-router.get("/users/check-id", userCtrl.process.checkId);
-router.put("/users/:user_id", userCtrl.process.updateUser);
+router.post("/users", userValidation.checkAddUser, userCtrl.process.signUp); //회원가입 : 유효성검사
+router.post("/users/login", userValidation.checkUser, userCtrl.process.login); //로그인 : 유효성검사
+router.get("/users/check-id", userValidation.checkUserId, userCtrl.process.checkId);
+router.put(
+  "/users/:id",
+  authCtrl.check.accessToken,
+  userValidation.checkUpdateUser,
+  userCtrl.process.updateUser
+); //수정 : 인증, 유효성검사
+router.get(
+  "/users/:id",
+  authCtrl.check.accessToken,
+  userValidation.checkKeyUserId,
+  userCtrl.process.getUserInfo
+); //조회 : 인증, 유효성검사
 
 module.exports = router;

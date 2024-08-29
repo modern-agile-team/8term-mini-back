@@ -79,10 +79,30 @@ const checkUserId = [
   },
 ];
 
-const checkUpdateUser = [
-  param("user_id")
+const checkKeyUserId = [
+  param("id")
     .exists()
-    .withMessage("user_id 전달 오류")
+    .withMessage("id 전달 오류")
+    .bail()
+    .isInt()
+    .withMessage("id 입력 오류")
+    .bail(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (errors.isEmpty()) {
+      return next();
+    }
+
+    return res.status(400).json({ data: errors.array()[0].msg });
+  },
+];
+
+const checkUpdateUser = [
+  param("id")
+    .exists()
+    .withMessage("id 전달 오류")
     .bail()
     .isInt()
     .withMessage("id 입력 오류")
@@ -119,7 +139,7 @@ const checkUpdateUser = [
     .exists()
     .withMessage("profile 전달 오류")
     .bail()
-    .matches("/^profileimg[1-8].png$/")
+    .matches(/^profileimg[1-8]\.png$/)
     .withMessage("profile 입력 오류")
     .bail(),
 
@@ -134,4 +154,4 @@ const checkUpdateUser = [
   },
 ];
 
-module.exports = { checkAddUser, checkUser };
+module.exports = { checkAddUser, checkUser, checkUserId, checkUpdateUser, checkKeyUserId };
