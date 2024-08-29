@@ -128,7 +128,7 @@ class UserService {
   }
   async updateUser() {
     const userId = this.params.id;
-    const { nickname, password, profile } = this.body;
+    const { nickname, password, confirmPassword, profile } = this.body;
 
     if (!userId) {
       return {
@@ -144,10 +144,10 @@ class UserService {
       }
 
       const existingUserInfo = userExists[0][0];
-
       const updatedNickname = nickname || existingUserInfo.nickname;
       const updatedProfile = profile || existingUserInfo.profile;
       let updatedPassword = existingUserInfo.password; // 기본적으로 기존 비밀번호 유지
+
       if (password) {
         if (password !== confirmPassword) {
           return {
@@ -155,7 +155,6 @@ class UserService {
             data: { error: "비밀번호 입력값과 일치하지 않습니다." },
           };
         }
-        // 비밀번호 해싱
         updatedPassword = await UserService.hashPassword(password);
       }
       await UserStorage.updateUserInfo(userId, updatedNickname, updatedPassword, updatedProfile);

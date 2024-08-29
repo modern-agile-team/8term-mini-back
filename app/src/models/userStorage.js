@@ -19,8 +19,30 @@ class UserStorage {
   }
 
   static updateUserInfo(userId, nickname, password, profile) {
-    const query = "UPDATE user SET nickname = ?, password = ?, profile = ? WHERE user_id = ?;";
-    return db.query(query, [nickname, password, profile, userId]);
+    let query = "UPDATE user SET ";
+    const values = [];
+
+    if (nickname !== undefined) {
+      query += "nickname = ?, ";
+      values.push(nickname);
+    }
+    if (password !== undefined) {
+      query += "password = ?, ";
+      values.push(password);
+    }
+    if (profile !== undefined) {
+      query += "profile = ?, ";
+      values.push(profile);
+    }
+
+    query = query.slice(0, -2); // 마지막의 ', ' 제거
+    query += " WHERE user_id = ?;";
+    values.push(userId);
+
+    console.log("Generated Query:", query);
+    console.log("Values:", values);
+
+    return db.query(query, values);
   }
 }
 
